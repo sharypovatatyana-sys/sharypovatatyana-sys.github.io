@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Scratch. Повторение</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#4f8df7;
+}
+
+.container{
+    max-width:800px;
+    margin:40px auto;
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#333;
+}
+
+#progress{
+    font-size:18px;
+    margin-bottom:15px;
+    color:#666;
+}
+
+#question{
+    font-size:26px;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.answer{
+    display:block;
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    font-size:18px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#f1f1f1;
+    transition:.2s;
+}
+
+.answer:hover{
+    background:#d8ebff;
+}
+
+.correct{
+    background:#7CFC7C !important;
+}
+
+.wrong{
+    background:#ff8b8b !important;
+}
+
+#feedback{
+    margin-top:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+#explanation{
+    margin-top:10px;
+    color:#444;
+}
+
+#next{
+    margin-top:30px;
+    padding:15px 35px;
+    font-size:18px;
+    background:#4f8df7;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    display:none;
+}
+
+#score{
+    float:right;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Scratch. Повторение</h1>
+
+<div id="progress">
+Вопрос <span id="num">1</span>/3
+<span id="score">Баллы: 0</span>
+</div>
+
+<div id="question"></div>
+
+<div id="answers"></div>
+
+<div id="feedback"></div>
+<div id="explanation"></div>
+
+<button id="next">Следующий вопрос</button>
+
+</div>
+
+<script>
+
+const quiz=[
+
+{
+question:"1. Какой блок всегда запускает программу?",
+answers:[
+"Когда щёлкнут по зелёному флагу",
+"Идти 10 шагов",
+"Всегда",
+"Если"
+],
+correct:0,
+explanation:"Любой проект Scratch начинается с события «Когда щёлкнут по зелёному флагу»."
+},
+
+{
+question:"2. После запуска нужно поставить героя в начало экрана. Какой блок подходит?",
+answers:[
+"Идти 10 шагов",
+"Изменить x на 10",
+"Перейти в x: ... y: ...",
+"Повернуться на 15°"
+],
+correct:2,
+explanation:"Блок «Перейти в x:y» сразу ставит спрайт в нужную точку."
+},
+
+{
+question:"3. Почему нельзя использовать блок «Идти 10 шагов» для установки героя в начало?",
+answers:[
+"Потому что герой исчезнет",
+"Потому что он окажется неизвестно где",
+"Потому что шагов слишком мало",
+"Потому что этот блок удалён"
+],
+correct:1,
+explanation:"Блок «Идти 10 шагов» двигает спрайт относительно текущего положения, а не переносит его в конкретную точку."
+}
+
+];
+
+let current=0;
+let score=0;
+
+const question=document.getElementById("question");
+const answers=document.getElementById("answers");
+const feedback=document.getElementById("feedback");
+const explanation=document.getElementById("explanation");
+const next=document.getElementById("next");
+
+function loadQuestion(){
+
+document.getElementById("num").innerText=current+1;
+document.getElementById("score").innerText="Баллы: "+score;
+
+feedback.innerHTML="";
+explanation.innerHTML="";
+next.style.display="none";
+
+question.innerHTML=quiz[current].question;
+
+answers.innerHTML="";
+
+quiz[current].answers.forEach((ans,index)=>{
+
+let btn=document.createElement("button");
+btn.className="answer";
+btn.innerHTML=ans;
+
+btn.onclick=()=>check(btn,index);
+
+answers.appendChild(btn);
+
+});
+
+}
+
+function check(button,index){
+
+let buttons=document.querySelectorAll(".answer");
+
+buttons.forEach(b=>b.disabled=true);
+
+if(index==quiz[current].correct){
+
+button.classList.add("correct");
+feedback.innerHTML="✅ Правильно!";
+feedback.style.color="green";
+score++;
+
+}else{
+
+button.classList.add("wrong");
+buttons[quiz[current].correct].classList.add("correct");
+
+feedback.innerHTML="❌ Неправильно";
+feedback.style.color="red";
+
+}
+
+document.getElementById("score").innerText="Баллы: "+score;
+
+explanation.innerHTML=quiz[current].explanation;
+
+next.style.display="inline-block";
+
+}
+
+next.onclick=function(){
+
+current++;
+
+if(current>=quiz.length){
+
+document.querySelector(".container").innerHTML=`
+<h1>Тест завершён!</h1>
+
+<h2>Ваш результат</h2>
+
+<p style="font-size:30px;text-align:center;">
+${score} из ${quiz.length}
+</p>
+
+`;
+
+}else{
+
+loadQuestion();
+
+}
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
