@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Словарные слова</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('background1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+        }
+
+        /* ============================================================ */
+        /* ОСНОВНАЯ ОБЁРТКА */
+        /* ============================================================ */
+        .wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 548px;
+            width: 100%;
+        }
+
+        /* ============================================================ */
+        /* ЗАГОЛОВОК НАД КОНТЕЙНЕРОМ */
+        /* ============================================================ */
+        .main-title {
+            font-family: 'Fredoka One', 'Nunito', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: #F95F29;
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            line-height: 1.1;
+            text-shadow: 
+                -3px -3px 0 #FFFFFF,
+                3px -3px 0 #FFFFFF,
+                -3px 3px 0 #FFFFFF,
+                3px 3px 0 #FFFFFF,
+                0px 7px 13px #DCB160;
+        }
+
+        /* ============================================================ */
+        /* БЕЛЫЙ КОНТЕЙНЕР */
+        /* ============================================================ */
+        .container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 266px;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 15.8px #FFD878;
+            border-radius: 20px;
+            padding: 35px 40px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ============================================================ */
+        /* КНОПКА "НАЧАТЬ ТРЕНИРОВКУ" (ПОД КОНТЕЙНЕРОМ) */
+        /* ============================================================ */
+        .btn-play {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 5px;
+            width: 100%;
+            max-width: 490px;
+            height: 86px;
+            margin-top: 25px;
+            background: linear-gradient(180deg, #88B913 0%, #4BA411 100%);
+            border: 7px solid #FFFFFF;
+            box-shadow: 0px 7px 13px #DCB160;
+            border-radius: 50px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            line-height: 1;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .btn-play:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0px 10px 20px #DCB160;
+        }
+
+        .btn-play:active:not(:disabled) {
+            transform: translateY(3px);
+            box-shadow: 0px 3px 8px #DCB160;
+        }
+
+        .btn-play:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ========== ГЛАВНЫЙ ЭКРАН ========== */
+        .screen-main {
+            display: block;
+            width: 100%;
+        }
+        .screen-main.hidden {
+            display: none;
+        }
+
+        .main-subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .class-selection {
+            margin-bottom: 20px;
+        }
+        .class-selection .label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .class-btn {
+            position: relative;
+            padding: 14px 8px 10px;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: #fff;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            text-align: center;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            min-height: 72px;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+            transform: translateY(0);
+            background: #e8e8e8;
+            color: #555;
+        }
+        .class-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+        }
+        .class-btn .check-box {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            border: none;
+        }
+        .class-btn .check-box .check-mark {
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: #4CAF50;
+            line-height: 1;
+        }
+        .class-btn.active .check-box .check-mark {
+            opacity: 1;
+        }
+        .class-btn:not(.active) {
+            background: #f0f0f0;
+            color: #555;
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+        }
+        .class-btn:not(.active) .class-number {
+            color: #555;
+        }
+        .class-btn:not(.active) .class-label {
+            color: #999;
+        }
+        .class-btn:not(.active) .check-box {
+            background: #ffffff;
+            border: none;
+        }
+
+        .class-btn.active[data-class="1"] { background: linear-gradient(145deg, #FFD42A, #f5c800); box-shadow: 0 4px 0 #c9a100; color: #fff; }
+        .class-btn.active[data-class="2"] { background: linear-gradient(145deg, #A0CC3A, #8cb82e); box-shadow: 0 4px 0 #6f9424; color: #fff; }
+        .class-btn.active[data-class="3"] { background: linear-gradient(145deg, #529CE5, #3a88d1); box-shadow: 0 4px 0 #2a6ea8; color: #fff; }
+        .class-btn.active[data-class="4"] { background: linear-gradient(145deg, #B371E4, #a05cd6); box-shadow: 0 4px 0 #7f44b0; color: #fff; }
+        .class-btn.active[data-class="5"] { background: linear-gradient(145deg, #F39B2B, #e0891a); box-shadow: 0 4px 0 #b86e14; color: #fff; }
+        .class-btn.active[data-class="6"] { background: linear-gradient(145deg, #29C3C2, #1eabaa); box-shadow: 0 4px 0 #178887; color: #fff; }
+        .class-btn.active[data-class="7"] { background: linear-gradient(145deg, #AF5FD1, #9c4abf); box-shadow: 0 4px 0 #7d3999; color: #fff; }
+        .class-btn.active[data-class="8"] { background: linear-gradient(145deg, #FA5D4B, #e84a38); box-shadow: 0 4px 0 #c03a2a; color: #fff; }
+        .class-btn.active[data-class="9"] { background: linear-gradient(145deg, #28B3CE, #1e9db5); box-shadow: 0 4px 0 #177d91; color: #fff; }
+        .class-btn.active[data-class="10"] { background: linear-gradient(145deg, #A9CD2E, #95b827); box-shadow: 0 4px 0 #77941e; color: #fff; }
+        .class-btn.active[data-class="11"] { background: linear-gradient(145deg, #FF6295, #f04a80); box-shadow: 0 4px 0 #c93a66; color: #fff; }
+
+        .class-btn.active .class-number { color: #fff; }
+        .class-btn.active .class-label { color: rgba(255, 255, 255, 0.85); }
+        .class-btn.active .check-box { background: rgba(255, 255, 255, 0.25); border: none; }
+
+        .class-btn .class-number {
+            font-size: 24px;
+            font-weight: 800;
+            font-family: 'Fredoka One', 'Nunito', sans-serif;
+            line-height: 1;
+            transition: color 0.3s ease;
+        }
+        .class-btn .class-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+        .class-btn:hover:not(.active) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+        }
+        .class-btn.active:hover {
+            transform: translateY(-2px);
+        }
+        .class-btn.active:hover[data-class="1"] { box-shadow: 0 6px 0 #c9a100; }
+        .class-btn.active:hover[data-class="2"] { box-shadow: 0 6px 0 #6f9424; }
+        .class-btn.active:hover[data-class="3"] { box-shadow: 0 6px 0 #2a6ea8; }
+        .class-btn.active:hover[data-class="4"] { box-shadow: 0 6px 0 #7f44b0; }
+        .class-btn.active:hover[data-class="5"] { box-shadow: 0 6px 0 #b86e14; }
+        .class-btn.active:hover[data-class="6"] { box-shadow: 0 6px 0 #178887; }
+        .class-btn.active:hover[data-class="7"] { box-shadow: 0 6px 0 #7d3999; }
+        .class-btn.active:hover[data-class="8"] { box-shadow: 0 6px 0 #c03a2a; }
+        .class-btn.active:hover[data-class="9"] { box-shadow: 0 6px 0 #177d91; }
+        .class-btn.active:hover[data-class="10"] { box-shadow: 0 6px 0 #77941e; }
+        .class-btn.active:hover[data-class="11"] { box-shadow: 0 6px 0 #c93a66; }
+
+        .class-btn:active {
+            transform: translateY(4px) !important;
+        }
+        .class-btn.active:active {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .selection-hint {
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            font-size: 17px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .main-status {
+            display: none;
+        }
+
+        /* ========== ЭКРАН ИГРЫ ========== */
+        .screen-game {
+            display: none;
+            width: 100%;
+        }
+        .screen-game.active {
+            display: block;
+        }
+
+        .game-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .game-top-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-menu-custom {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 5px;
+            width: 141px;
+            height: 46px;
+            background: #1978C3;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 15px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .btn-menu-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            background: #1a86d4;
+        }
+        .btn-menu-custom:active {
+            transform: scale(0.97);
+        }
+
+        .btn-finish {
+            background: #FA5D4B;
+            color: white;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            box-shadow: 0 4px 0 #c03a2a;
+            transform: translateY(0);
+            white-space: nowrap;
+        }
+        .btn-finish:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #c03a2a;
+        }
+        .btn-finish:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #c03a2a;
+        }
+        .btn-finish:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: 0 4px 0 #c03a2a;
+        }
+
+        .game-progress {
+            font-size: 16px;
+            font-weight: 700;
+            color: #555;
+            white-space: nowrap;
+            font-family: 'Nunito', sans-serif;
+        }
+        .game-progress span {
+            color: #667eea;
+        }
+
+        .game-instruction {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .word-status-block {
+            text-align: center;
+            padding: 25px 20px;
+            margin-bottom: 20px;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background: transparent;
+            border-radius: 0;
+        }
+
+        .word-status-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1978C3;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 50%;
+            margin-bottom: 10px;
+            animation: pulse 1.5s ease-in-out infinite;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .word-status-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: none;
+            stroke: #FFFFFF;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .word-status-icon.finished {
+            display: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25); }
+            50% { transform: scale(1.08); box-shadow: 0px 8px 20px rgba(25, 120, 195, 0.5); }
+        }
+
+        .word-status-text {
+            font-size: 18px;
+            color: #888;
+            font-weight: 600;
+            margin-top: 5px;
+            font-family: 'Nunito', sans-serif;
+        }
+        .word-status-text.active {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .input-row {
+            margin-bottom: 18px;
+            width: 100%;
+        }
+        .input-row input {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px 23px;
+            gap: 10px;
+            width: 100%;
+            height: 39px;
+            background: #FFFFFF;
+            border: 1px solid #ADBFDB;
+            box-shadow: 0px 4px 7.3px rgba(104, 109, 208, 0.25);
+            border-radius: 10px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            font-size: 16px;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+        }
+        .input-row input:focus {
+            border-color: #667eea;
+            box-shadow: 0px 4px 12px rgba(104, 109, 208, 0.4);
+        }
+        .input-row input:disabled {
+            background: #f5f5f5;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .input-row input::placeholder {
+            color: #999;
+            font-weight: 400;
+        }
+
+        .game-buttons {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+        .game-buttons .btn {
+            flex: 1;
+            min-width: 0;
+            padding: 10px 20px;
+            height: 52px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .btn-check {
+            background: linear-gradient(176.28deg, #76C64A 2.85%, #48AE0A 96.77%);
+            box-shadow: 0px 4px 7.1px #478E3B;
+            color: #FFFFFF;
+            flex: 1;
+        }
+        .btn-check:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 12px #478E3B;
+            background: linear-gradient(176.28deg, #80d454 2.85%, #4fb80e 96.77%);
+        }
+        .btn-check:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+        .btn-check:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-repeat {
+            background: linear-gradient(176.28deg, #FDB52D 5.89%, #FD9D0A 97.73%);
+            box-shadow: 0px 4px 7.1px #D97805;
+            color: #FFFFFF;
+            flex: 1;
+        }
+        .btn-repeat:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 12px #D97805;
+            background: linear-gradient(176.28deg, #fec04a 5.89%, #fdaa1a 97.73%);
+        }
+        .btn-repeat:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+        .btn-repeat:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-repeat svg,
+        .btn-check svg {
+            width: 20px;
+            height: 20px;
+            flex: none;
+        }
+
+        .stats {
+            text-align: center;
+            font-size: 15px;
+            color: #555;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 10px;
+            min-height: 38px;
+            width: 100%;
+            font-weight: 600;
+            font-family: 'Nunito', sans-serif;
+        }
+        .stats span {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .message {
+            text-align: center;
+            padding: 12px 16px;
+            margin-top: 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: none;
+            animation: slideIn 0.3s ease;
+            font-size: 15px;
+            width: 100%;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.success {
+            display: block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #a5d6a7;
+        }
+        .message.error {
+            display: block;
+            background: #fce4ec;
+            color: #c62828;
+            border: 2px solid #ef9a9a;
+        }
+
+        .message .correct-answer {
+            display: block;
+            margin-top: 6px;
+            font-size: 19px;
+            color: #2e7d32;
+            background: #c8e6c9;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+        }
+        .message .wrong-answer {
+            display: block;
+            margin-top: 6px;
+            font-size: 16px;
+        }
+        .message .wrong-answer span {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+        .message .wrong-answer .arrow {
+            margin: 0 8px;
+            font-size: 20px;
+        }
+
+        /* ========== ЭКРАН РЕЗУЛЬТАТОВ ========== */
+        .screen-result {
+            display: none;
+            width: 100%;
+        }
+        .screen-result.active {
+            display: block;
+        }
+
+        .result-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .result-title {
+            text-align: center;
+            font-family: 'Fredoka One', 'Nunito', sans-serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: #333;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .result-stats {
+            text-align: center;
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .result-stats span {
+            color: #667eea;
+            font-weight: 800;
+        }
+        .result-stats .grade {
+            display: block;
+            margin-top: 8px;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .result-errors {
+            margin-bottom: 20px;
+        }
+        .result-errors .errors-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .result-errors .errors-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-left: 20px;
+        }
+        .result-errors .error-word {
+            font-size: 16px;
+            font-weight: 600;
+            color: #c62828;
+            list-style: none;
+        }
+        .result-errors .no-errors {
+            text-align: center;
+            font-size: 16px;
+            color: #4CAF50;
+            font-weight: 700;
+            padding: 10px;
+        }
+        .result-errors.hidden-errors {
+            display: none;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+            justify-content: space-between;
+        }
+
+        .btn-result-menu {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 5px;
+            width: 141px;
+            height: 46px;
+            background: #1978C3;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 15px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .btn-result-menu:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            background: #1a86d4;
+        }
+        .btn-result-menu:active {
+            transform: scale(0.97);
+        }
+
+        .btn-result-retry {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            gap: 5px;
+            width: 141px;
+            height: 46px;
+            background: #FA5D4B;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 15px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .btn-result-retry:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            background: #e84a38;
+        }
+        .btn-result-retry:active {
+            transform: scale(0.97);
+        }
+
+        /* ============================================================ */
+        /* АДАПТИВ */
+        /* ============================================================ */
+        @media (max-width: 600px) {
+            .main-title {
+                font-size: 32px;
+                text-shadow: 
+                    -2px -2px 0 #FFFFFF,
+                    2px -2px 0 #FFFFFF,
+                    -2px 2px 0 #FFFFFF,
+                    2px 2px 0 #FFFFFF,
+                    0px 5px 10px #DCB160;
+            }
+
+            .container {
+                padding: 25px 20px;
+                border-radius: 16px;
+                min-height: auto;
+            }
+
+            .btn-play {
+                height: 70px;
+                font-size: 20px;
+                border-width: 5px;
+                margin-top: 20px;
+                border-radius: 40px;
+            }
+
+            .class-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            .class-btn {
+                padding: 10px 6px 8px;
+                font-size: 13px;
+                min-height: 62px;
+                border-radius: 12px;
+            }
+            .class-btn .class-number { font-size: 20px; }
+            .class-btn .class-label { font-size: 10px; }
+            .class-btn .check-box {
+                width: 16px;
+                height: 16px;
+                top: 4px;
+                right: 5px;
+            }
+            .class-btn .check-box .check-mark { font-size: 11px; }
+
+            .game-top-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .game-top-left {
+                justify-content: space-between;
+            }
+            .btn-finish {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+            .game-instruction { font-size: 17px; }
+            .game-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .game-buttons .btn {
+                width: 100% !important;
+                height: 48px !important;
+                padding: 10px 16px !important;
+                font-size: 15px !important;
+                flex: none !important;
+            }
+            .word-status-block {
+                padding: 15px 10px;
+                min-height: auto;
+            }
+            .word-status-icon {
+                width: 64px;
+                height: 64px;
+            }
+            .word-status-icon svg {
+                width: 32px;
+                height: 32px;
+            }
+            .word-status-text { font-size: 16px; }
+
+            .btn-menu-custom {
+                width: auto;
+                padding: 8px 14px;
+                height: 38px;
+                font-size: 13px;
+            }
+            .btn-menu-custom svg {
+                width: 14px;
+                height: 14px;
+            }
+            .input-row input {
+                height: 42px;
+                padding: 8px 16px;
+                font-size: 16px;
+            }
+            .btn-check svg,
+            .btn-repeat svg {
+                width: 18px;
+                height: 18px;
+            }
+            .game-progress { font-size: 14px; }
+            .selection-hint { font-size: 12px; }
+
+            .result-title { font-size: 26px; }
+            .result-stats { font-size: 16px; }
+            .result-buttons { 
+                flex-direction: row;
+                gap: 10px;
+            }
+            .btn-result-menu,
+            .btn-result-retry {
+                width: auto;
+                flex: 1;
+                padding: 8px 12px;
+                height: 40px;
+                font-size: 14px;
+            }
+            .result-errors .errors-list {
+                padding-left: 10px;
+            }
+            .result-errors .error-word {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .main-title {
+                font-size: 26px;
+                text-shadow: 
+                    -2px -2px 0 #FFFFFF,
+                    2px -2px 0 #FFFFFF,
+                    -2px 2px 0 #FFFFFF,
+                    2px 2px 0 #FFFFFF,
+                    0px 4px 8px #DCB160;
+            }
+
+            .container {
+                padding: 18px 14px;
+                border-radius: 16px;
+            }
+
+            .btn-play {
+                height: 60px;
+                font-size: 16px;
+                border-width: 4px;
+                margin-top: 15px;
+                border-radius: 30px;
+            }
+
+            .class-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            .class-btn {
+                padding: 8px 4px 6px;
+                font-size: 12px;
+                min-height: 54px;
+                border-radius: 10px;
+            }
+            .class-btn .class-number { font-size: 18px; }
+            .class-btn .class-label { font-size: 9px; }
+            .class-btn .check-box {
+                width: 14px;
+                height: 14px;
+                top: 3px;
+                right: 4px;
+            }
+            .class-btn .check-box .check-mark { font-size: 10px; }
+
+            .btn-menu-custom {
+                padding: 5px 10px;
+                height: 32px;
+                font-size: 12px;
+                border-radius: 10px;
+            }
+            .btn-menu-custom svg {
+                width: 12px;
+                height: 12px;
+            }
+            .btn-finish {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .game-buttons .btn {
+                height: 44px !important;
+                font-size: 14px !important;
+                border-radius: 12px !important;
+            }
+            .input-row input {
+                height: 38px;
+                font-size: 14px;
+                padding: 6px 14px;
+                border-radius: 8px;
+            }
+            .word-status-block {
+                padding: 10px 8px;
+            }
+            .word-status-icon {
+                width: 56px;
+                height: 56px;
+            }
+            .word-status-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+            .word-status-text { font-size: 14px; }
+            .game-instruction {
+                font-size: 15px;
+                margin-bottom: 15px;
+            }
+            .stats {
+                font-size: 13px;
+                padding: 8px;
+                min-height: 32px;
+            }
+            .message {
+                font-size: 13px;
+                padding: 10px 12px;
+            }
+
+            .result-title { font-size: 22px; }
+            .result-stats { font-size: 14px; }
+            .result-errors .error-word { font-size: 13px; }
+            .btn-result-menu,
+            .btn-result-retry {
+                padding: 6px 10px;
+                height: 34px;
+                font-size: 12px;
+            }
+            .result-errors .errors-list {
+                padding-left: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- ============================================================ -->
+    <!-- ЗАГОЛОВОК НАД БЕЛЫМ КОНТЕЙНЕРОМ -->
+    <!-- ============================================================ -->
+    <div class="main-title">Словарные слова</div>
+
+    <!-- ============================================================ -->
+    <!-- БЕЛЫЙ КОНТЕЙНЕР -->
+    <!-- ============================================================ -->
+    <div class="container">
+
+        <!-- ========================================================= -->
+        <!-- ГЛАВНЫЙ ЭКРАН -->
+        <!-- ========================================================= -->
+        <div class="screen-main" id="mainScreen">
+            <div class="main-subtitle">ТРЕНАЖЁР</div>
+            <div class="class-selection">
+                <span class="label">Выбери классы для тренировки</span>
+                <div class="class-grid" id="classGrid"></div>
+                <div class="selection-hint">💡 Вы можешь выбрать сразу несколько классов</div>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- ЭКРАН ИГРЫ -->
+        <!-- ========================================================= -->
+        <div class="screen-game" id="gameScreen">
+            <div class="game-top-bar">
+                <button class="btn-menu-custom" id="menuBtnFromGame">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    В меню
+                </button>
+                <button class="btn-finish" id="finishBtn">⏹ Завершить</button>
+            </div>
+            <div class="game-progress" style="text-align:center; margin-bottom:15px;">
+                Слово <span id="currentNum">1</span> из <span id="totalNum">30</span>
+            </div>
+            <div class="game-instruction">Прослушай слово и напиши его</div>
+            <div class="word-status-block" id="wordStatusBlock">
+                <div class="word-status-icon" id="statusIcon">
+                    <svg class="speaker-icon" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M17 8C18.5 9.5 18.5 14.5 17 16" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M20 5C23 8 23 16 20 19" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <svg class="pencil-icon" viewBox="0 0 24 24" fill="none" style="display:none;">
+                        <path d="M12 20H21" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M16.5 3.5L20.5 7.5L7 21L3 21L3 17L16.5 3.5Z" stroke-width="2" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="word-status-text" id="statusText">Слово произносится...</div>
+            </div>
+            <div class="input-row">
+                <input type="text" id="wordInput" placeholder="Введи слово..." disabled>
+            </div>
+            <div class="game-buttons">
+                <button class="btn btn-check" id="checkBtn" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Проверить
+                </button>
+                <button class="btn btn-repeat" id="repeatBtn" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" 
+                              stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M17 8C18.5 9.5 18.5 14.5 17 16" 
+                              stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M20 5C23 8 23 16 20 19" 
+                              stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Повторить
+                </button>
+            </div>
+            <div class="stats" id="stats">
+                Правильно: <span id="correctCount">0</span> из <span id="totalCount">0</span>
+            </div>
+            <div class="message" id="message"></div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- ЭКРАН РЕЗУЛЬТАТОВ -->
+        <!-- ========================================================= -->
+        <div class="screen-result" id="resultScreen">
+            <div class="result-top-bar">
+                <button class="btn-result-menu" id="resultMenuBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    В меню
+                </button>
+                <button class="btn-result-retry" id="resultRetryBtn">Повторить диктант</button>
+            </div>
+            <div class="result-title">Диктант завершён</div>
+            <div class="result-stats" id="resultStats"></div>
+            <div class="result-errors" id="resultErrors">
+                <div class="errors-title" id="errorsTitle">Слова с ошибками:</div>
+                <div class="errors-list" id="errorsList"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- КНОПКА "НАЧАТЬ ТРЕНИРОВКУ" (ПОД КОНТЕЙНЕРОМ) -->
+    <!-- ============================================================ -->
+    <button class="btn-play" id="playBtn">🚀 Начать тренировку</button>
+
+</div>
+
+<script>
+    // =============================================================
+    // СЛОВАРНЫЕ СЛОВА (1-11 КЛАССЫ)
+    // =============================================================
+    const wordsByClass = {
+        1: ["алмаз", "алфавит", "апрель", "арбуз", "банан", "барабан", "батон", "болото", "борьба", "ботинки", "будто", "быстро", "воробей", "ворона", "город", "девочка", "забор", "загадка", "задача", "закон", "запад", "заря", "зашёл", "звонишь", "звонят", "зеркало", "зима", "иней", "иногда", "истина", "кабина", "какао", "калина", "камыш", "капель", "капитан", "капуста", "карандаш", "карман", "картон", "коньки", "лисица", "мальчик", "мебель", "месяц", "морковь", "Москва", "муравей", "пальто", "петух", "посуда", "ребята", "рисунок", "Россия", "собака", "сорока", "тарелка", "учебник", "учитель"],
+        2: ["алмаз", "алфавит", "апрель", "арбуз", "банан", "барабан", "баран", "баранка", "батон", "берёза", "болото", "ботинки", "будка", "будто", "быстро", "бьёт", "воробей", "ворона", "город", "горох", "девочка", "дежурный", "деревня", "забор", "завод", "загадка", "задача", "закон", "запад", "заря", "зашёл", "заяц", "звонишь", "звонят", "зеркало", "зима", "иней", "иногда", "истина", "кабина", "каблук", "какао", "калина", "камыш", "капель", "капитан", "капуста", "карандаш", "карман", "картон", "класс", "коньки", "корова", "лисица", "лопата", "мальчик", "машина", "мебель", "медведь", "молоко", "морковь", "мороз", "Москва", "муравей", "одежда", "пальто", "пенал", "петух", "платок", "посуда", "работа", "ребята", "Россия", "сапоги", "сахар", "собака", "сорока", "стакан", "тарелка", "тетрадь", "тонна", "ученик", "учитель", "хорошо", "язык"],
+        3: ["агроном", "активный", "алмаз", "аппетит", "апрель", "аптека", "аромат", "баран", "баранка", "батон", "беседа", "биография", "болото", "борозда", "борьба", "ботинки", "будка", "будто", "бульдозер", "быстро", "бьёт", "вежливый", "викторина", "виток", "вместе", "волшебник", "восемь", "галерея", "гореть", "горизонт", "гражданин", "двадцать", "двенадцать", "деликатный", "диалог", "директор", "доверие", "едкий", "ездить", "желать", "желтеть", "женщина", "живопись", "забавы", "забор", "загадка", "задача", "закон", "запад", "заповедник", "заря", "засеять", "зашёл", "звонишь", "звонят", "земледелие", "зеркало", "зима", "издалека", "изложение", "изображение", "иней", "инициатива", "иногда", "интонация", "истина", "кабина", "каблук", "какао", "калина", "каллиграфия", "камыш", "капель", "капитан", "карикатура", "картон", "каталог", "катушка", "квартал", "коллективный", "командир", "комната", "конституция", "коньки", "кровать", "лисица", "локомотив", "малина", "маляр", "молоток", "муравей", "мякоть", "неаккуратный", "невежливый", "недоверчивый", "неинтересный", "неискренний", "некрасивый", "неопрятный", "неуклюжий", "неумный", "нечестный", "оборона", "овёс", "овощи", "овца", "огород", "одиннадцать", "однажды", "около", "орех", "орнамент", "отечество", "оттенок", "очевидец", "пароль", "пейзаж", "печаль", "пороша", "портрет", "потом", "правительство", "председатель", "привет", "профессия", "путешествие", "равнина", "революция", "Россия", "салют", "сверкать", "сверху", "свобода", "сейчас", "секрет", "серебряный", "сеялка", "слева", "снегирь", "снизу", "солдат", "справа", "тонна", "торжественный", "ураган", "фантазия", "финиш", "фиолетовый", "фойе", "хозяйство", "цитата", "честно", "шествовать", "шефствовать", "шпион", "экипаж", "экскаватор", "экспресс", "электричество", "электростанция", "эскалатор"],
+        4: ["авария", "автобус", "автомобиль", "агроном", "адрес", "аккуратно", "активный", "алеет (алый)", "аллея", "альбом", "аптека", "багаж", "батон", "берег", "берёза", "беседа", "библиотека", "билет", "богатство", "болото", "борозда", "борьба", "ботинки", "будто", "бульдозер", "быстро", "бьёт", "вагон", "везде", "викторина", "вместе", "вокзал", "волшебник", "воробей", "ворона", "восемь", "восток", "впереди", "вчера", "газета", "галерея", "гореть", "горизонт", "город", "гражданин", "двадцать", "двенадцать", "девочка", "дежурный", "декабрь", "деликатный", "деревня", "директор", "до свидания", "доверие", "дорога", "желать", "железо", "желтеть", "женщина", "жёлтый", "живопись", "жилище", "забор", "завод", "завтра", "завтрак", "загадка", "задача", "закон", "запад", "заповедник", "заря", "засеять", "зашёл", "заяц", "звонишь", "звонят", "здесь", "здравствуй(те)", "земледелие", "земляника", "зеркало", "зима", "издалека", "иней", "инженер", "инициатива", "иногда", "интересный", "истина", "йеменцы", "йога", "кабина", "какао", "календарь", "калина", "камыш", "капель", "капитан", "капуста", "карандаш", "картина", "картон", "картофель", "каталог", "квартира", "килограмм", "километр", "класс", "коллектив", "командир", "комбайн", "комната", "корабль", "корова", "космонавт", "костёр", "лагерь", "легко", "лестница", "лисица", "локомотив", "лопата", "магазин", "малина", "машина", "медведь", "медленно", "месяц", "металл", "метро", "молоко", "молоток", "мороз", "Москва", "муравей", "назад", "налево", "направо", "народ", "невзрачный", "недоросль", "неприятель", "неуклюжий", "обед", "обидеть", "оборона", "овёс", "овощи", "овца", "огород", "огурец", "одежда", "одиннадцать", "однажды", "около", "октябрь", "орнамент", "отечество", "очевидец", "пальто", "пароль", "пассажир", "пейзаж", "пенал", "песок", "победа", "погода", "помидор", "понедельник", "портрет", "посуда", "потом", "правительство", "председатель", "прекрасный", "путешествие", "пшеница", "пятница", "работа", "рабочий", "равнина", "ракета", "расстояние", "растение", "ребята", "революция", "рисунок", "родина", "Россия", "русский", "салют", "самолёт", "сверкать", "сверху", "свобода", "север", "сегодня", "сейчас", "семена", "серебряный", "сеялка", "слева", "снизу", "солдат", "солома", "справа", "столица", "суббота", "субботник", "телевизор", "телефон", "теперь", "тепловоз", "тетрадь", "товарищ", "тонна", "топор", "торжественный", "трактор", "трамвай", "троллейбус", "ужин", "улица", "ураган", "урожай", "ученик", "учитель", "фамилия", "фантазия", "финиш", "фиолетовый", "фойе", "хлебороб", "хозяйство", "хорошо", "цитата", "честно", "четверг", "чёрный", "шестнадцать", "шоссе", "шофёр", "экскурсия", "электричество", "электровоз", "электростанция", "яблоко", "ягода", "язык"],
+        5: ["абзац", "абрикос", "авария", "Австралия", "Азия", "активный", "алеет (алый)", "аллея", "алмаз", "алмазный", "алфавит", "альбом", "Америка", "ананас", "Антарктида", "апельсин", "аптека", "арена", "ароматный", "артиллерия", "артист", "артистка", "атлет", "афиша", "Африка", "багрянец", "багряный", "балет", "балкон", "банан", "барабан", "баран", "баранка", "баскетбол", "баян", "бегемот", "безвкусица", "безвкусный", "безмятежный", "беречь", "беседовать", "билет", "бинокль", "бирюзовый", "благородный", "блеснуть", "блестеть", "блистать", "борьба", "брошюра", "будка", "будущее", "бульон", "бьёт", "вагон", "вверху", "вдвоём", "велогонки", "велосипед", "вестибюль", "ветеран", "витрина", "влево", "внизу", "вокзал", "вокруг", "волнение", "воображение", "вообразить", "вообще", "восклицательный", "восстание", "восторгаться", "восхищаться", "впечатление", "вправо", "вскоре", "втроём", "выражение", "выразительный", "галерея", "гардероб", "гармония", "гвоздика", "героический", "гимнастика", "гитара", "гладиолус", "гореть", "горизонт", "горизонтальный", "грамматика", "грамотный", "громадный", "гуманизм", "диалог", "диван", "дирижёр", "дистанция", "доброжелательный", "достижение", "желание", "жечь", "жонглёр", "жужжать", "жюри", "загораться", "закреплять", "замечательный", "запах", "запись", "здание", "здесь", "здоровье", "здравствуй(те)", "знакомиться", "знаменитый", "издалека", "изредка", "изумительный", "изумрудный", "иллюстрация", "инженер", "интересоваться", "интонация", "информация", "искусство", "исполин", "исполинский", "исчезать", "кабинет", "календарь", "канал", "квартира", "кипятить", "коллективный", "коллекция", "колючий", "компания (друзей, одноклассников)", "компьютер", "компьютерщик", "конфета", "корзина", "коричневый", "космонавт", "костюм", "кочевник", "кристалл", "крыжовник", "лазурный", "легенда", "лиловый", "лингвистический", "магнитофон", "мало-помалу", "мандарин", "маршрут", "матч", "медальон", "метафора", "мечта", "миллион", "могучий", "монолог", "наверное", "налево", "направо", "напрягаться", "наслаждаться", "негодовать", "недоразумение", "недоумевать", "независимость", "ненавидеть", "необходимость", "необъятный", "необыкновенный", "необычный", "неохватный", "непреодолимый", "обвинять", "оберегать", "обитатель", "облегчение", "обогащать", "обозначать", "обоняние", "образ", "общество", "объяснять", "огорчаться", "огромный", "олицетворение", "оптимизм", "ослепительный", "осторожный", "отдалённый", "отовсюду", "отражать", "отражение", "очевидец", "ошеломить", "павильон", "пансионат", "парашют", "паркет", "пассивный", "пастух", "пессимизм", "песчаный", "печатать", "пианино", "платформа", "племянник", "по-моему", "побеждать", "повествовательный", "подоконник", "пожалуйста", "поколение", "помидор", "помощник", "поразительный", "порхать", "посвятить", "посетить", "почерк", "почтальон", "поэзия", "правильный", "предавать", "предатель", "прекрасный", "пренебрегать", "препинание", "преподавать", "препятствие", "препятствовать", "преследовать", "прибор", "привет", "приглашать", "приду", "призвание", "прийти", "приключение", "пример", "примитивный", "приобрести", "природа", "присяга", "присягать", "причина", "приятный", "продолжаться", "продолжение", "происхождение", "пропаганда", "просвещение", "профессия", "равнина", "разгадать", "раздаваться", "разделить", "раздражать", "разъединять", "ракета", "рапорт", "расписание", "рассвет", "рассказ", "рассказывать", "расставаться", "расстояние", "рассчитать", "расцвет", "расчёт", "расчётливый", "расшифровать", "рекорд", "ремень", "республика", "решительный", "ромашка", "Россия", "рюкзак", "салют", "сатира", "сбить", "сверкать", "свидетель", "сгиб", "сдать", "серебристый", "сжать", "сигнал", "слева", "соревноваться", "состязание", "состязаться", "спартакиада", "специальность", "спортсмен", "справа", "справедливый", "сражаться", "сражение", "стадион", "стеречь", "стихотворение", "стремиться", "талант", "таракан", "телевидение", "телевизор", "телефон", "температура", "терраса", "территория", "тонна", "торжественный", "трамвай", "транскрипция", "тренер", "тренироваться", "троллейбус", "убеждение", "увлекать", "угадать", "угодить", "удивительный", "удовольствие", "украшать", "украшение", "университет", "утверждать", "фигура", "философ", "фиолетовый", "фойе", "фонтан", "фотоаппарат", "фразеологизм", "футбол", "хоккей", "человечество", "чернила", "честность", "чехол", "чувствовать", "шампиньон", "шоколад", "шоссе", "шотландия", "шофёр", "эгоизм", "экзамен", "экипаж", "энергия", "эскимо", "юмор", "юный", "янтарный"],
+        6: ["авиапромышленность", "авиасалон", "авиасъёмка", "автогараж", "автоколонна", "автопилот", "акваланг", "аквалангист", "аквамарин", "акварель", "аквариум", "акватория", "аккуратный", "альбом", "алюминиевый", "алюминий", "аморальный", "антигуманный", "антидемократичный", "антинародный", "аполитичный", "аритмичный", "арматура", "атмосфера", "багроветь", "багровый", "багряный", "банан", "барабан", "баран", "баранка", "бассейн", "бахрома", "безмятежный", "бетон", "библиотека", "биография", "биология", "бирюзовый", "благодарить", "благодарность", "благодарный", "блаженство", "блаженствовать", "богатырь", "бордовый", "будка", "в общем", "вдалеке", "вдали", "великолепие", "великолепный", "велосипед", "вестибюль", "воспалённый", "восторг", "восторгаться", "восторженный", "восхитительный", "восхищаться", "восхищение", "впечатление", "впечатлять", "впечатляющий", "выдавать", "выдавить", "гараж", "гектар", "генерал", "географ", "географический", "география", "геолог", "геологический", "геология", "геометрический", "геометрия", "герб", "гербовый", "гипербола", "гиперболический", "гостиная", "гостиница", "гостиный (двор)", "громоздить", "громоздкий", "давать", "давить", "далёкий", "дальнейший", "двести", "девяносто", "деепричастие", "деепричастный оборот", "дезинформация", "дезинформировать", "дезорганизация", "дезорганизовать", "демобилизация", "демобилизовать", "демонтаж", "демонтировать", "дискуссионный", "дискуссировать (дискутировать)", "дискуссия", "долина", "долинный", "дощатый", "драгоценный", "жестокий", "жестокость", "завтра", "завтрашний", "заглавие", "зелёный", "значение", "значительный", "зоолог", "зоологический", "зоология", "издали", "изжелта-красный", "изображать", "изображение", "изобразительный", "иллюстрация", "иметь в виду", "интеллигент", "интеллигентный", "интерес", "интересный", "интересоваться", "исковерканный", "искусный", "искусство", "исполинский", "иссиня-черный", "исследование", "истребитель", "истребить", "истреблять", "йеменцы", "йога", "казаться", "как будто", "калейдоскоп", "калоши", "каморка", "кампания (выборная)", "карабкаться", "карикатура", "карикатурный", "карниз", "катастрофа", "катастрофический", "квартира", "коварный", "коварство", "коверкать", "ковырять", "количественный", "количество", "коллекция", "колонна", "колоссальный", "колотить", "колотушка", "колыхать", "колышущийся", "командир", "командировка", "компания (друзей, одноклассников)", "конвейер", "конструировать", "конструктивный", "конструкция", "корреспондент", "лагуна", "ладонь", "лазоревый", "лежанка", "лейтенант", "магнитофон", "магнитофонный", "маляр", "медаль", "местоимение", "местоимённый", "микрофон", "миллиард", "миллион", "невежа", "невежда", "несмотря на", "носорог", "носорожий", "носорожья", "обиход", "обращать(ся)", "обращение", "общественно полезный", "общественно-политический", "одиннадцать", "орнамент", "оскорбить", "оскорбление", "отдалённый", "отечество", "отсюда", "оттуда", "отчество", "отчизна", "палисадник", "паркет", "парламент", "парламентарий", "парламентский", "пародийный", "пародировать", "пародия", "патриот", "патриотизм", "патриотический", "педаль", "пейзаж", "пейзажист", "пейзажный", "передавать", "перила", "перископ", "пиджак", "пичужка", "подавлять", "поддаваться", "подзаголовок", "подражать", "подчинение", "подчинённый", "подчинить", "подчиняться", "показаться", "полемизировать", "полемика", "полемический", "политика", "политический", "поражение", "поскользнуться", "пребывать (на работе)", "превратить", "предатель", "предать", "предел", "предмет", "президент", "президентский", "президиум", "презирать", "прекословить", "прекратить", "прекращать", "прелестный", "прелесть", "премьера", "преобразовать", "преодолеть", "препятствие", "препятствовать", "пререкание", "пререкаться", "пресмыкаться", "престиж", "престижный", "престол", "претворить (мечту в жизнь)", "прибыть (на работу)", "привет", "приветливый", "привилегированный", "привилегия", "привыкать", "пригласить", "пригодиться", "приготовить", "прийти", "приказать", "приключение", "приключенческий", "прилежный", "приличие", "приличный", "применение", "применять", "пример", "примерять", "примирять", "примитивизм", "примитивный", "приобрести", "природа", "природный", "присмотреться", "приспособить", "присутствовать", "присяга", "присягать", "притворить (дверь)", "притворный", "притворство", "причина", "приятель", "приятельский", "приятно", "приятный", "прогресс", "прогрессивный", "произведение", "профессионализм", "профессиональный", "профессия", "ракета", "религиозный", "религия", "репертуар", "репетировать", "репетиция", "репродукция", "реформа", "решать", "решение", "решительный", "ровесник", "румяный", "салат", "салфетка", "сверстник", "свиной", "сейчас", "сельдерей", "серьёзный", "симпатизировать", "симпатичный", "симпатия", "симфонический", "симфония", "синий", "сирень", "следующий", "сократить", "сокращение", "солдат", "солома", "соломенный", "состязание", "так как", "так что", "талант", "таракан", "театр", "театральный", "телеграмма", "телефон", "телефонный", "терраса", "типография", "торжественный", "торжество", "торжествовать", "торопиться", "торопливый", "тревога", "тревожный", "трибуна", "триста", "троллейбус", "уважать", "уважение", "уважительный", "удалить", "удовольствие", "употребительный", "учреждение", "фарфор", "фасоль", "фаянс", "физиономия", "фиолетовый", "фонарь", "центнер", "четыреста", "шампунь", "шевелить", "штукатур", "штукатурить", "эвкалипт", "экземпляр", "экономить", "экскаватор", "эмблема", "юный", "январский"],
+        7: ["абрикос", "авария", "автор", "адмирал", "академия", "акваланг", "аквамарин", "аквариум", "аккуратно", "алеет (алый)", "аллея", "алмазный", "алфавит", "альбом", "ананас", "ансамбль", "апрель", "арена", "артистка", "архитектура", "атака", "афиша", "бассейн", "безмятежный", "библиотека", "благодаря тому что", "блаженно", "блистать", "бок о бок", "бродячий", "в насмешку", "в отличие", "в продолжение (какого- либо времени) (предлог)", "в силу того что", "в течение (какого-либо времени) (предлог)", "в целом", "в частности", "ввиду (предлог)", "величие", "ветеран", "видимо-невидимо", "вмиг", "внимание", "вовеки (нареч.)", "вовремя (нареч.)", "возражение", "волей-неволей", "вплотную (нареч.)", "вполовину", "впоследствии", "вразрез (нареч.)", "врассыпную (нареч.)", "вредитель", "вследствие того что", "вслепую (нареч.)", "выразительность", "выровненный", "галерея", "генерал", "гимнастика", "гирлянда", "гнездиться", "горизонт", "горно-металлургический", "государство", "давным-давно", "дальневосточный", "делегат", "демонстрация", "дискуссия", "дистанция", "для того чтобы", "до свидания", "до смерти", "довольно", "документ", "дремучий", "жасмин", "жеваный", "желанный", "за границей", "за границу (ехать за границу)", "забвение", "заграница (торговля с заграницей)", "зажжённый", "зажигать", "залив", "замечание", "зарницы", "затем", "зато (= но)", "зачем (нареч.)", "защёлкнуть", "здравствуй(те)", "знаменовать", "из-за", "из-под", "извините", "издавна", "издательство", "изобразить", "иметь в виду", "информация", "искусный", "искусственный", "искусство", "йеменцы", "йога", "как будто", "калитка", "калоши", "караван", "карикатура", "карман", "катастрофа", "квитанция", "классик", "кованый", "коллекция", "колонна", "команда", "комбинат", "комбинация", "комендант", "комментировать", "конверт", "корабль-ракета", "коснуться", "кромешный", "кросс", "лебеда", "лейтенант", "литература", "личинка", "майор", "мало-помалу", "масса", "матч", "маяк", "медленный", "минимальный", "могущество", "на глазок", "на днях", "на дом", "на лету", "на миг", "на память", "на скаку", "на совесть", "на ходу", "навеки (нареч.)", "наизусть", "насекомое", "не раз (= много раз)", "неведомый", "невиданный", "недосягаемый", "нежданный", "неизменный", "неправдоподобный", "неслыханный", "нечаянный", "ни разу (= никогда)", "никак", "нимало", "нисколечко", "ничуть", "облокотиться", "озираться", "ориентация", "ориентироваться", "осанка", "остановиться", "отворить", "отечество", "отклонить", "отразить", "оттого что", "отчасти (нареч.)", "отчизна", "офицер", "пакет", "палящий", "памятник", "панцирь", "паром", "партер", "пейзаж", "период", "печальный", "печать", "плакат", "плащ-палатка", "пленительный", "по двое", "по окончании", "по памяти", "по прибытии", "по совести", "по трое", "по-видимому (нареч.)", "по-настоящему (нареч.)", "по-прежнему (нареч.)", "под силу", "пожалуйста", "полярный (день)", "поминутно", "понимание", "поражение", "поразительный", "постановление", "потому что", "почтальон", "поэзия", "правитель", "предварительный", "президент", "президиум", "прекратить", "пресса", "претендовать", "претензия", "привлекать", "привольный", "присутствовать", "проворно", "прогресс", "прожорливый", "пропорциональный", "процесс", "путешественник", "радио", "разворачиваться", "разгораться", "раскалённый", "рассказ", "реальный", "редакция", "резиденция", "резолюция", "рекомендация", "реформа", "роман", "с налёту", "с разбегу", "с тем чтобы", "санаторий", "сатира", "сваляться", "светофор", "свирепый", "священный", "секунда", "семафор", "сессия", "сигнал", "силуэт", "симпатичный", "ситуация", "сияние", "сиять", "случай", "снаряд", "сновидение", "солдат", "спалённый", "спасибо", "спортсмен", "старательно", "студёный", "суверенный", "судостроительный", "таинственный", "таракан", "телевидение", "территория", "то есть", "тонна", "торопиться", "тотчас (нареч.)", "точь-в-точь", "традиция", "трасса", "тревога", "тренер", "тренироваться", "трепетать", "увеличить", "увенчанный", "уничтожить", "уцепиться", "участник", "фантазия", "фигурист", "хоккей", "целина", "цемент", "цивилизация", "циклон", "циновка", "цитрусовый", "чемпион", "чтобы", "шевелиться", "шиповник", "широкоэкранный", "шоссе", "экспресс", "эпидемия", "эфир"],
+        8: ["автобус", "автомобиль", "авторитет", "администрация", "академия", "акация", "аллегория", "алмаз", "алмазный", "амбразура", "амфитеатр", "аннотация", "ансамбль", "апофеоз", "аромат", "арсенал", "артиллерия", "архитектура", "ассортимент", "асфальт", "аттестат", "аудитория", "байдарка", "батальон", "безвестный", "беллетристика", "бельэтаж", "бескорыстный", "бессмертный", "библиограф", "бизнесмен", "биограф", "благородный", "блокнот", "бок о бок", "большинство", "братство", "будущее", "бюллетень", "величина", "вероятно", "видеокамера", "витрина", "витязь", "внимание", "воображение", "воочию", "воплотить", "восстановить", "впечатление", "впопыхах", "впоследствии", "выразить", "галерея", "гарантировать", "гарантия", "гармония", "гарнизон", "гениальный", "гипотеза", "горельеф", "гостиница", "грандиозность", "грациозный", "дебаты", "дебют", "девиз", "действительный", "декларация", "декларировать", "декоративный", "декорация", "делегат", "деликатный", "демонстрация", "депутат", "диалог", "диплом", "директор", "дискуссия", "дисциплина", "достоинство", "достопримечательность", "дощатый", "единомышленник", "естественный", "зодчество", "зодчий", "идеал", "идеальный", "извинить(ся)", "изобразительный", "изящество", "изящно", "изящный", "иллюминация", "иллюстрация", "иллюстрированный", "импровизация", "интеллект", "интеллектуальный", "интенсивный", "интерьер", "информация", "информировать", "искусный", "искусство", "иссечённый", "истинный", "йеменцы", "йога", "каблук", "кавалерия", "калоши", "кандидат", "канонада", "карнавал", "картотека", "квалифицировать", "классика", "классический", "колокол", "колорит", "колоссальный", "комбинация", "комиссия", "комитет", "компаньон", "композитор", "композиция", "компонент", "компьютер", "комфорт", "конгресс", "консерватория", "конференция", "концерт", "корректный", "корректор", "корреспондент", "красноречие", "кутюрье", "лаборатория", "ландшафт", "лауреат", "легенда", "лучше", "маневрировать", "манёвр", "маршрут", "массив", "масштаб", "меньшинство", "металл", "метрополитен", "миграция", "микрофон", "микроэлемент", "мировоззрение", "митинг", "многообразие", "мобильный", "монолог", "мультимедиа", "мультимедийный", "мультипликация", "мультфильм", "на ходу", "накануне", "непоколебимый", "непосредственный", "непревзойдённый", "обаяние", "обаятельный", "обелиск", "обоняние", "обособление", "общественный", "обязанность", "оживлённый", "олицетворять", "оптимизм", "оратор", "ораторский", "организация", "оригинальный", "ориентироваться", "орнамент", "оскорбить", "осуществить", "ответственность", "офицер", "официальный", "памятник", "панорама", "партер", "патриот", "патриотизм", "пафос", "пейзаж", "период", "перрон", "перспектива", "пессимист", "питомец", "подлинный", "поздний", "полемизировать", "полемика", "поликлиника", "поражать", "постамент", "постановление", "преданность", "представление", "предшественник", "преемник", "президент", "президиум", "прелестный", "премьера", "прения", "преобразование", "преследовать", "претвориться", "претендент", "претензия", "привилегия", "приобщиться", "приоритет", "проблема", "прогресс", "прогрессивный", "проект", "прожектор", "пролог", "прообраз", "пропорция", "просветительство", "просвещение", "прототип", "профессия", "пьедестал", "пьеса", "разнообразие", "рассечённый", "рассчитывать", "расчёт", "реальный", "реванш", "регулировать", "режиссёр", "резолюция", "рекомендация", "реликвия", "ремонт", "репертуар", "репетиция", "репродукция", "репутация", "рессора", "реставрация", "рецензия", "риторика", "ровесник", "российский", "Россия", "русский", "рябина", "самолюбие", "сверстник", "свидетельство", "сезон", "секретарь", "силуэт", "символ", "симфония", "сканер", "современник", "сожжённый", "созданный", "солидарность", "соловьиный", "соотечественник", "соразмерность", "специальность", "спокойный", "стипендия", "стратегия", "суббота", "сувенир", "талантливый", "тенденция", "терраса", "тираж", "торжественный", "торжество", "традиция", "трамвай", "транслировать", "транспарант", "транспорт", "трасса", "троллейбус", "труженик", "удостоверение", "универмаг", "универсальный", "университет", "факультет", "фантазия", "фасад", "фейерверк", "фестиваль", "философия", "фильмотека", "фронтон", "характер", "ценность", "чемпион", "честолюбивый", "шествовать", "экипаж", "эксперимент", "экспериментировать", "эксплуатация", "экспрессивный", "экспрессия", "элемент", "эпилог", "эрудиция", "эстетический", "этикет"],
+        9: ["абзац", "абонемент", "абонент", "абориген", "авиапочта", "Австралия", "автобиография", "агентство", "администрация", "адъютант", "Азия", "аккомпанемент", "аккомпанировать", "аккумулятор", "аксессуар", "активный", "алгоритм", "аллегория", "алюминий", "Америка", "амфитеатр", "аналитический", "аннотация", "аннулировать", "антагонизм", "Антарктида", "аппаратура", "аппликация", "аптека", "аргумент", "ассистент", "ассортимент", "ассоциация", "асфальт", "аттестат", "аудитория", "Африка", "бадминтон", "балет", "балласт", "беззаветный", "беллетристика", "бетонный", "библиография", "благовонный", "благородство", "блестеть", "блистать", "будущее", "вернисаж", "верование", "вертикально", "взаимный", "вместительный", "внезапно", "воззрение", "восточнославянский", "всеобъемлющий", "встрепенуться", "выразительный", "газификация", "галерея", "гениальный", "гений", "гигант", "гигантский", "гостиная", "гравюра", "гражданственность", "грейпфрут", "гуманизм", "гуманный", "декоративный", "декорация", "деликатес", "демократический", "деятельный", "диапазон", "диафрагма", "дилетант", "дипломат", "дискуссия", "доклад", "драгоценный", "ёмкость", "желательный", "забытьё", "заведующий", "запечатлеть", "знаменитый", "игнорировать", "идеал", "идеальный", "идеологический", "идеология", "идиллия", "идти", "иллюстрация", "индивидуальный", "индикатор", "индоевропейский", "инициатива", "инопланетный", "интеллектуальный", "интеллигентность", "интеллигентный", "интенсивный", "инцидент", "исконно русский", "искусный", "искусственный", "исполинский", "исследовательский", "исчезающий", "караван", "карета", "карикатура", "каталог", "катастрофа", "классика", "классифицировать", "клише", "коварный", "колледж", "колонка", "колонна", "колорит", "колосс", "колоссальный", "комедия", "комиссия", "комментарий", "комментатор", "коммерция", "коммуникация", "коммюнике", "компенсация", "компетентный", "композиция", "компонент", "компрессия", "компромисс", "компьютер", "конкурент", "конкуренция", "консерватория", "конспект", "конспектировать", "констатировать", "континент", "кооператив", "коралл", "корректор", "кристалл", "кристальный", "лабиринт", "лаборатория", "лаконизм", "лейтмотив", "лелеять", "либерализм", "ликвидировать", "лиловый", "лингвистика", "магнолия", "материальный", "мемориальный", "метеоролог", "механизатор", "мечтательный", "милосердие", "миндальный", "минимальный", "мировоззрение", "миропонимание", "мозаика", "мэрия", "мюзик-холл", "мятежный", "накануне", "намерение", "направление", "напрягать", "национальный", "начинающий", "невежественный", "недосягаемый", "недремлющий", "необходимость", "неоценимый", "неприхотливый", "несовершенство", "ничтожный", "обещание", "обличать", "обличительный", "образоваться", "овладеть", "одухотворять", "оказаться", "опера", "оператор", "операция", "оппозиция", "оппонент", "оптимист", "оранжерея", "организм", "ориентир", "ориентироваться", "освещённый", "оседать", "оскомина", "осторожный", "отражение", "отчаянный", "охарактеризовать", "очарование", "палисадник", "панорама", "параллельный", "парламент", "парламентский", "паутина", "персонаж", "пессимист", "печальный", "питательный", "планомерно", "повествовательный", "подзаголовок", "подобру-поздорову", "показаться", "поколение", "покровительство", "полемика", "политический", "полярный (день)", "понапрасну", "понаслышке", "поодиночке", "популярный", "посетитель", "постановление", "потомки", "праздный", "превосходство", "предание", "предыстория", "презентация", "президент", "презрительный", "преимущество", "прекратить", "преобразование", "привилегия", "привязанность", "прийти", "приоритет", "прогноз", "прогнозирование", "прогнозировать", "прогресс", "прогрессивный", "просветитель", "просвещённый", "прославлять", "просторный", "прототип", "процесс", "пьедестал", "равнина", "радиофикация", "раскалённый", "расположить", "расстаться", "рассчитывать", "расчёт", "расщелина", "реактивный", "реакция", "реальный", "регулярно", "режиссёр", "резервы", "резолюция", "результат", "рекомендация", "ресурсы", "реферат", "референдум", "реформа", "рецензия", "решительный", "сбережение", "сдержанный", "селение", "силуэт", "символизировать", "симпозиум", "сиреневый", "систематизировать", "систематически", "совершенный", "совершённый", "сокровенный", "сокровищница", "сопротивляться", "сосредоточение", "сохранять", "социальный", "стабильный", "становиться", "стараться", "стремительный", "схоластика", "сэкономить", "тайм-аут", "тезисы", "тенденция", "терроризм", "тождественный", "трагедия", "традиция", "транскрипция", "тысячелетие", "увещевать", "удивительный", "уединение", "упорядочить", "управлять", "утверждение", "ухитряться", "фарс", "фарфор", "фельетон", "фиаско", "филолог", "филология", "философия", "цивилизация", "цивилизованный", "цирюльник", "цитата", "часовня", "человечный", "чествовать", "чопорный", "чрезвычайный", "чувствовать", "шаблон", "экзаменатор", "экземпляр", "экологический", "экология", "экономист", "экскурс", "экспедиция", "эксперимент", "экспресс", "экспрессивность", "экспрессия", "электрификация", "эпиграф", "эрудиция", "эстетический", "этимологический", "этимология", "эффект"],
+        10: ["абажур", "аббревиатура", "абзац", "абонемент", "абориген", "абстрактный", "автограф", "автострада", "адекватный", "адъюнкт", "ажиотаж", "айсберг", "академия", "акварель", "акклиматизация", "аккомпанемент", "аккомпаниатор", "аккорд", "аккордеон", "аккумулятор", "аккуратный", "аксессуар", "актуальный", "алеет (алый)", "аллегория", "аллея", "аллитерация", "альбатрос", "альманах", "альтернатива", "альфа-лучи", "алюминий", "амплитуда", "амплуа", "анафора", "анахронизм", "анекдот", "анналы", "аннотация", "антенна", "антициклон", "антология", "аплодисменты", "апогей", "апостол", "аппарат", "аппендицит", "аппетит", "аппликация", "артикуляция", "артиллерия", "архаизм", "асессор", "асимметрия", "ассамблея", "атолл", "аттестат", "аттракцион", "аудитория", "бадминтон", "базар", "балл (отметка)", "баллада", "балласт", "баллон", "барельеф", "барокко", "баррикада", "бархат", "бассейн", "батальон", "батискаф", "без вести (пропасть)", "без просвета", "без разбору", "без спросу", "без толку", "без удержу", "без устали", "безалаберный", "безапелляционный", "безжалостный", "безошибочно", "безынициативный", "безынтересный", "безыскусный", "безысходный", "белиберда", "белладонна", "белорус", "бельэтаж", "бескозырка", "беспрецедентный", "бесприданница", "беспроцентно-выигрышный", "бессонница", "бесспорный", "бессчетный", "бесчувственный", "бетон", "бефстроганов", "бечева", "биатлон", "бидон", "биллион", "бильярд", "биография", "благословить", "бледно-розовый", "блеснуть", "близкородственный", "блокпост", "бомбардировщик", "бонбоньерка", "бороздчатый", "брандспойт", "бриллиант (брильянт)", "букинист", "буланый", "бумеранг", "бухгалтер", "бюллетень", "в диковинку", "в насмешку", "в обнимку", "в обрез", "в обтяжку", "в обхват", "ва-банк", "вагоностроительный", "вакуум", "вакханалия", "варежка", "ваттметр", "вблизи", "вбок", "вброд", "вверх", "ввиду (предлог)", "вволю", "ввысь", "вдалеке", "вдобавок", "вдогонку", "вдребезги", "вегетарианский", "велеречивый", "великоросс", "великорус", "веранда", "вермишель", "вернисаж", "вертишейка", "верфь", "вестибюль", "винегрет", "виньетка", "виолончель", "вкось", "вкрутую", "влёт", "вмиг", "внакидку", "внакладе", "внешкольный", "вниз", "вничью", "вновь", "во всеоружии", "во всеуслышание", "вовек", "водоросль", "военачальник", "вожжи", "впервые", "вперевалку", "впереди", "вперемежку (попеременно чередуясь, перемежаясь)", "вперемешку (в смешанном виде, в беспорядке)", "вперёд", "вплавь", "вплотную (нареч.)", "вповалку", "вполголоса", "вполоборота", "вполсилы", "впоследствии", "впотьмах", "вправо", "впредь", "вприглядку", "вприпрыжку", "вприсядку", "впритык", "вразбивку", "вразвалку", "врасплох", "врассыпную (нареч.)", "всерьёз", "вслепую (нареч.)", "вслух", "вспять", "втёмную", "втихомолку", "второпях", "втрое", "втроём", "втройне", "габарит", "гардероб", "генеалогия", "гигиена", "гипербола", "горемыка", "градация", "грамм", "грипп", "группа", "гуашь", "гуттаперча", "да здравствует", "девяносто", "декларация", "дельтаплан", "деривация", "дефицит", "джентльмен", "диктант", "диктофон", "дисквалификация", "диссертация", "диссонанс", "дифирамб", "до отвала", "до отказа", "до сих пор", "до упаду", "довлеть", "доминанта", "доныне", "дотла", "древнерусский", "дрожжи", "евангелие", "евразийский", "ежовый", "еретик", "жакет", "жасмин", "желатин", "жёлоб", "жёлудь", "жёрдочка", "жокей", "жонглёр", "жор", "жужелица", "жюри", "за здравие", "за пазухой", "за полдень", "замуж", "запанибрата", "запятая", "защёлка", "званый", "здравствуй(те)", "землетрясение", "златокованый", "златотканый", "зодиак", "иван-да-марья", "иван-чай", "идиллия", "идиома", "иероглиф", "иждивенчество", "извечно", "издавна", "издревле", "изжога", "изморозь (род инея)", "изморось (очень мелкий дождь)", "изнутри", "иллюзия", "иллюминация", "иллюстрация", "иммунитет", "ингредиент", "инкассатор", "интеллект", "интеллигент", "инфинитив", "инъекция", "ипподром", "искусный", "исподтишка", "йог", "йогурт", "йод", "кавалькада", "какаду", "какофония", "калейдоскоп", "календарь", "каллиграфия", "калькулятор", "каньон", "касса", "кассета", "катавасия", "килограмм", "километр", "класс", "клише", "коврижка", "коллизия", "коллоквиум", "колонна", "колоннада", "комментарий", "композиция", "компромисс", "контекст", "контригра", "конференция", "коралл", "корчёвка", "коттедж", "лабиринт", "ландшафт", "луноход", "мавзолей", "магнолия", "мажорный", "майонез", "макулатура", "мандарин", "манипуляция", "маскарад", "масленица", "массаж", "мачеха", "медальон", "металл", "металлолом", "метаморфоза", "метафора", "метеоролог", "метрдотель", "миллион", "миротворец", "морфология", "моцион", "мэр", "на авось", "на бегу", "на глаз", "на износ", "на плаву", "на подбор", "на скаку", "на-горе", "набело", "наверх", "навечно", "навзничь", "навзрыд", "наглухо", "надвое", "наедине", "назло", "наизнанку", "наизусть", "наискосок", "наискось", "наитие", "наперебой", "наперевес", "наперегонки", "наперерез", "наперехват", "напролом", "нараспев", "нарцисс", "наряду", "насквозь", "насмарку", "наугад", "наудалую", "начистоту", "не к добру", "не к спеху", "не по себе", "не с руки", "небылица", "невтерпёж", "недоучка", "ненароком", "неологизм", "ни в коем случае", "ничком", "новелла", "ностальгия", "оазис", "обелиск", "обогащать", "общо", "объект", "озон", "оккупация", "оранжерея", "орфограмма", "орфография", "орфоэпия", "павильон", "пакгауз", "палеограф", "палисадник", "пантомима", "папоротник", "параграф", "парашют", "пассаж", "пассажир", "патронташ", "пейзаж", "перекати-поле", "периферия", "перпендикуляр", "пескарь", "пессимист", "по-иному", "побоку", "под мышкой", "полицмейстер", "понтон", "презентация", "пресса", "престиж", "притча", "пропаганда", "пудинг", "равелин", "рафинад", "ремарка", "с разбегу", "с разлёту", "с размаху", "саванна", "сам не свой", "санаторий", "сандалия", "сарафан", "сбоку", "священник", "семантика", "семинар", "симметрия", "снегирь", "спроста", "такелаж", "тамада", "танцор", "телетайп", "темперамент", "тушёнка", "тушь", "уездный", "университет", "ураган", "фабула", "фаэтон", "фейерверк", "фельдъегерь", "фестиваль", "философ", "фонтан", "халат", "хлеб-соль", "хлестать", "хлёсткий", "худо-бедно", "целлофан", "целлюлоза", "центнер", "циклон", "цилиндр", "циферблат", "цыган", "цыкать", "цып-цып", "цыпки", "цыплёнок", "цыпочки", "цыц", "часовня", "чемпион", "четыреста", "шаблон", "шампиньон", "шарада", "шасси", "шеренга", "шов", "шорох", "шпаргалка", "щедроты", "щеколда", "щупальца", "эвкалипт", "эволюция", "эвфемизм", "эгида", "эквивалент", "экзамен", "экземпляр", "экспрессия", "элегия", "эликсир", "эпиграмма", "эпилог", "юннат", "юный", "явственный", "ядрёный", "якобы", "январский", "яство", "ятаган"],
+        11: ["абажур", "аббревиатура", "абзац", "абонемент", "абориген", "абстрактный", "автограф", "автострада", "агентство", "адекватный", "адъюнкт", "адъютант", "ажиотаж", "айсберг", "академия", "акварель", "акклиматизация", "аккомпанемент", "аккомпаниатор", "аккорд", "аккордеон", "аккумулятор", "аккуратный", "аксессуар", "актуальный", "алеет (алый)", "аллегория", "аллея", "аллитерация", "альбатрос", "альманах", "альтернатива", "альфа-лучи", "алюминий", "амплитуда", "амплуа", "анафора", "анахронизм", "анекдот", "анналы", "аннотация", "антенна", "антициклон", "антология", "аплодисменты", "апогей", "апостол", "апофеоз", "аппарат", "аппендицит", "аппетит", "аппликация", "артикуляция", "артиллерия", "архаизм", "асессор", "асимметрия", "ассамблея", "ассистент", "атолл", "аттестат", "аттракцион", "аудитория", "бадминтон", "базар", "балл (отметка)", "баллада", "балласт", "баллон", "барельеф", "барокко", "баррикада", "бархат", "бассейн", "батальон", "батискаф", "без вести (пропасть)", "без просвета", "без разбору", "без спросу", "без толку", "без удержу", "без устали", "безалаберный", "безапелляционный", "безжалостный", "безошибочно", "безынициативный", "безынтересный", "безыскусный", "безысходный", "белиберда", "белладонна", "белорус", "бельэтаж", "бескозырка", "беспрецедентный", "бесприданница", "беспроцентно-выигрышный", "бессонница", "бесспорный", "бессчетный", "бесчувственный", "бетон", "бефстроганов", "бечева", "биатлон", "бидон", "бизнесмен", "биллион", "бильярд", "биография", "благословить", "бледно-розовый", "блеснуть", "близкородственный", "блокпост", "бомбардировщик", "бонбоньерка", "бороздчатый", "брандспойт", "бриллиант (брильянт)", "букинист", "буланый", "бумеранг", "бухгалтер", "бюллетень", "в диковинку", "в насмешку", "в обнимку", "в обрез", "в обтяжку", "в обхват", "ва-банк", "вагоностроительный", "вакуум", "вакханалия", "варежка", "ваттметр", "вблизи", "вбок", "вброд", "вверх", "ввиду (предлог)", "вволю", "ввысь", "вдалеке", "вдобавок", "вдогонку", "вдребезги", "вегетарианский", "велеречивый", "великоросс", "великорус", "веранда", "вермишель", "вернисаж", "вертишейка", "верфь", "вестибюль", "винегрет", "виньетка", "виолончель", "вкось", "вкрутую", "влёт", "вмиг", "внакидку", "внакладе", "внешкольный", "вниз", "вничью", "вновь", "во всеоружии", "во всеуслышание", "вовек", "водоросль", "военачальник", "вожжи", "воззрение", "впервые", "вперевалку", "впереди", "вперемежку (попеременно чередуясь, перемежаясь)", "вперемешку (в смешанном виде, в беспорядке)", "вперёд", "вплавь", "вплотную (нареч.)", "вповалку", "вполголоса", "вполоборота", "вполсилы", "впопыхах", "впоследствии", "впотьмах", "вправо", "впредь", "вприглядку", "вприпрыжку", "вприсядку", "впритык", "вразбивку", "вразвалку", "врасплох", "врассыпную (нареч.)", "всерьёз", "вслепую (нареч.)", "вслух", "вспять", "втёмную", "втихомолку", "второпях", "втрое", "втроём", "втройне", "габарит", "гардероб", "генеалогия", "гигиена", "гипербола", "горемыка", "градация", "грамм", "грейпфрут", "грипп", "группа", "гуашь", "гуттаперча", "да здравствует", "дебаты", "девяносто", "декларация", "дельтаплан", "деривация", "дефицит", "джентльмен", "диктант", "диктофон", "дипломат", "дисквалификация", "диссертация", "диссонанс", "дифирамб", "до отвала", "до отказа", "до сих пор", "до упаду", "довлеть", "доминанта", "доныне", "достопримечательность", "дотла", "древнерусский", "дрожжи", "евангелие", "евразийский", "ежовый", "еретик", "ёмкость", "жакет", "жасмин", "желатин", "жёлоб", "жёлудь", "жёрдочка", "жокей", "жонглёр", "жор", "жужелица", "жюри", "за здравие", "за пазухой", "за полдень", "замуж", "запанибрата", "запятая", "защёлка", "званый", "здравствуй(те)", "землетрясение", "златокованый", "златотканый", "зодиак", "иван-да-марья", "иван-чай", "идиллия", "идиома", "иероглиф", "иждивенчество", "извечно", "издавна", "издревле", "изжога", "изморозь (род инея)", "изморось (очень мелкий дождь)", "изнутри", "иллюзия", "иллюминация", "иллюстрация", "иммунитет", "ингредиент", "инкассатор", "интеллект", "интеллигент", "инфинитив", "инъекция", "ипподром", "искусный", "исподтишка", "исследовательский", "йог", "йогурт", "йод", "кавалькада", "какаду", "какофония", "калейдоскоп", "календарь", "каллиграфия", "калькулятор", "каньон", "касса", "кассета", "катавасия", "килограмм", "километр", "класс", "клише", "коврижка", "коллизия", "коллоквиум", "колонна", "колоннада", "комментарий", "компетентный", "композиция", "компромисс", "контекст", "контригра", "конференция", "коралл", "корчёвка", "коттедж", "лабиринт", "ландшафт", "луноход", "мавзолей", "магнолия", "мажорный", "майонез", "макулатура", "мандарин", "манипуляция", "маскарад", "масленица", "массаж", "мачеха", "медальон", "металл", "металлолом", "метаморфоза", "метафора", "метеоролог", "метрдотель", "миллион", "миротворец", "морфология", "моцион", "мультимедиа", "мэр", "на авось", "на бегу", "на глаз", "на износ", "на плаву", "на подбор", "на скаку", "на-горе", "набело", "наверх", "навечно", "навзничь", "навзрыд", "наглухо", "надвое", "наедине", "назло", "наизнанку", "наизусть", "наискосок", "наискось", "наитие", "наперебой", "наперевес", "наперегонки", "наперерез", "наперехват", "напролом", "нараспев", "нарцисс", "наряду", "насквозь", "насмарку", "наугад", "наудалую", "начистоту", "не к добру", "не к спеху", "не по себе", "не с руки", "небылица", "невтерпёж", "недоучка", "ненароком", "неологизм", "ни в коем случае", "ничком", "новелла", "ностальгия", "оазис", "обелиск", "обогащать", "общо", "объект", "озон", "оккупация", "оранжерея", "орфограмма", "орфография", "орфоэпия", "павильон", "пакгауз", "палеограф", "палисадник", "пантомима", "папоротник", "параграф", "парашют", "пассаж", "пассажир", "патронташ", "пейзаж", "перекати-поле", "периферия", "перпендикуляр", "пескарь", "пессимист", "по-иному", "побоку", "под мышкой", "подобру-поздорову", "полицмейстер", "понаслышке", "понтон", "презентация", "пресса", "престиж", "притча", "прожектор", "пропаганда", "пудинг", "равелин", "рафинад", "ремарка", "с разбегу", "с разлёту", "с размаху", "саванна", "сам не свой", "санаторий", "сандалия", "сарафан", "сбоку", "священник", "семантика", "семинар", "симметрия", "снегирь", "сожжённый", "спроста", "такелаж", "тамада", "танцор", "телетайп", "темперамент", "тушёнка", "тушь", "уездный", "университет", "ураган", "фабула", "фаэтон", "фейерверк", "фельдъегерь", "фестиваль", "философ", "фонтан", "халат", "хлеб-соль", "хлестать", "хлёсткий", "худо-бедно", "целлофан", "целлюлоза", "ценность", "центнер", "циклон", "цилиндр", "циферблат", "цыган", "цыкать", "цып-цып", "цыпки", "цыплёнок", "цыпочки", "цыц", "часовня", "чемпион", "четыреста", "шаблон", "шампиньон", "шарада", "шасси", "шеренга", "шов", "шорох", "шпаргалка", "щедроты", "щеколда", "щупальца", "эвкалипт", "эволюция", "эвфемизм", "эгида", "эквивалент", "экзамен", "экземпляр", "экспрессия", "элегия", "эликсир", "эпиграмма", "эпилог", "этикет", "юннат", "юный", "явственный", "ядрёный", "якобы", "январский", "яство", "ятаган"]
+    };
+
+    // =============================================================
+    // DOM
+    // =============================================================
+    const mainScreen = document.getElementById('mainScreen');
+    const gameScreen = document.getElementById('gameScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const playBtn = document.getElementById('playBtn');
+    const menuBtnFromGame = document.getElementById('menuBtnFromGame');
+    const resultMenuBtn = document.getElementById('resultMenuBtn');
+    const resultRetryBtn = document.getElementById('resultRetryBtn');
+    const finishBtn = document.getElementById('finishBtn');
+    const checkBtn = document.getElementById('checkBtn');
+    const repeatBtn = document.getElementById('repeatBtn');
+    const wordInput = document.getElementById('wordInput');
+    const statusIcon = document.getElementById('statusIcon');
+    const statusText = document.getElementById('statusText');
+    const currentNum = document.getElementById('currentNum');
+    const totalNum = document.getElementById('totalNum');
+    const correctCount = document.getElementById('correctCount');
+    const totalCount = document.getElementById('totalCount');
+    const stats = document.getElementById('stats');
+    const messageDiv = document.getElementById('message');
+    const resultStats = document.getElementById('resultStats');
+    const errorsList = document.getElementById('errorsList');
+    const errorsTitle = document.getElementById('errorsTitle');
+    const resultErrors = document.getElementById('resultErrors');
+    const classGrid = document.getElementById('classGrid');
+
+    // =============================================================
+    // СОЗДАНИЕ КНОПОК КЛАССОВ
+    // =============================================================
+    const classNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const selectedClasses = new Set();
+
+    classNumbers.forEach(num => {
+        const btn = document.createElement('button');
+        btn.className = 'class-btn';
+        btn.dataset.class = num;
+        btn.innerHTML = `
+            <span class="class-number">${num}</span>
+            <span class="class-label">Класс</span>
+            <div class="check-box">
+                <span class="check-mark">✓</span>
+            </div>
+        `;
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            const classNum = parseInt(this.dataset.class);
+            if (this.classList.contains('active')) {
+                selectedClasses.add(classNum);
+            } else {
+                selectedClasses.delete(classNum);
+            }
+        });
+        classGrid.appendChild(btn);
+    });
+
+    // =============================================================
+    // ПЕРЕМЕННЫЕ ИГРЫ
+    // =============================================================
+    let selectedWords = [];
+    let currentWord = '';
+    let total = 0;
+    let correct = 0;
+    let wordIndex = 0;
+    let isGameActive = false;
+    let isWaitingForNext = false;
+    let isFinished = false;
+    let speechSynth = null;
+    let isSpeaking = false;
+    let errorWords = [];
+
+    // =============================================================
+    // СИНТЕЗ РЕЧИ
+    // =============================================================
+    function initSpeech() {
+        if ('speechSynthesis' in window) {
+            speechSynth = window.speechSynthesis;
+            return true;
+        }
+        return false;
+    }
+
+    function speakWord(word, callback) {
+        if (!speechSynth) {
+            if (callback) callback();
+            return;
+        }
+
+        speechSynth.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'ru-RU';
+        utterance.rate = 0.7;
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+
+        const voices = speechSynth.getVoices();
+        const ruVoice = voices.find(voice => voice.lang.startsWith('ru'));
+        if (ruVoice) utterance.voice = ruVoice;
+
+        isSpeaking = true;
+        
+        const speakerIcon = statusIcon.querySelector('.speaker-icon');
+        const pencilIcon = statusIcon.querySelector('.pencil-icon');
+        if (speakerIcon) speakerIcon.style.display = 'block';
+        if (pencilIcon) pencilIcon.style.display = 'none';
+        
+        statusIcon.style.animation = 'pulse 0.8s ease-in-out infinite';
+        statusText.textContent = 'Слово произносится...';
+        statusText.className = 'word-status-text active';
+
+        utterance.onstart = () => {
+            isSpeaking = true;
+        };
+
+        utterance.onend = () => {
+            isSpeaking = false;
+            
+            if (speakerIcon) speakerIcon.style.display = 'none';
+            if (pencilIcon) pencilIcon.style.display = 'block';
+            
+            statusIcon.style.animation = 'pulse 1.5s ease-in-out infinite';
+            statusText.textContent = 'Введи слово...';
+            statusText.className = 'word-status-text';
+            wordInput.disabled = false;
+            checkBtn.disabled = false;
+            wordInput.focus();
+            if (callback) callback();
+        };
+
+        utterance.onerror = () => {
+            isSpeaking = false;
+            statusIcon.style.animation = 'none';
+            statusText.textContent = 'Ошибка озвучки';
+            statusText.className = 'word-status-text';
+            wordInput.disabled = false;
+            checkBtn.disabled = false;
+            if (callback) callback();
+        };
+
+        speechSynth.speak(utterance);
+
+        wordInput.disabled = true;
+        checkBtn.disabled = true;
+        repeatBtn.disabled = false;
+
+        setTimeout(() => {
+            if (isSpeaking) {
+                isSpeaking = false;
+                if (speakerIcon) speakerIcon.style.display = 'none';
+                if (pencilIcon) pencilIcon.style.display = 'block';
+                statusIcon.style.animation = 'pulse 1.5s ease-in-out infinite';
+                statusText.textContent = 'Введи слово...';
+                statusText.className = 'word-status-text';
+                wordInput.disabled = false;
+                checkBtn.disabled = false;
+            }
+        }, 5000);
+    }
+
+    // =============================================================
+    // ПОВТОРИТЬ
+    // =============================================================
+    function repeatWord() {
+        if (!isGameActive || !currentWord || isWaitingForNext || isFinished) return;
+        if (speechSynth) speechSynth.cancel();
+        speakWord(currentWord);
+        repeatBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" 
+                      stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M17 8C18.5 9.5 18.5 14.5 17 16" 
+                      stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M20 5C23 8 23 16 20 19" 
+                      stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Повторяю...
+        `;
+        repeatBtn.disabled = true;
+        setTimeout(() => {
+            repeatBtn.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" 
+                          stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M17 8C18.5 9.5 18.5 14.5 17 16" 
+                          stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M20 5C23 8 23 16 20 19" 
+                          stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Повторить
+            `;
+            repeatBtn.disabled = false;
+        }, 2500);
+    }
+
+    // =============================================================
+    // ПОКАЗАТЬ РЕЗУЛЬТАТЫ
+    // =============================================================
+    function showResults() {
+        isFinished = true;
+        isGameActive = false;
+        
+        if (speechSynth) speechSynth.cancel();
+        
+        wordInput.disabled = true;
+        checkBtn.disabled = true;
+        repeatBtn.disabled = true;
+        finishBtn.disabled = true;
+        
+        gameScreen.classList.remove('active');
+        resultScreen.classList.add('active');
+        
+        const totalWords = total;
+        const correctAnswers = correct;
+        const percent = totalWords > 0 ? Math.round((correctAnswers / totalWords) * 100) : 0;
+        
+        let grade = '';
+        if (percent === 100) { grade = 'Отлично!'; }
+        else if (percent >= 80) { grade = 'Хорошо!'; }
+        else if (percent >= 60) { grade = 'Неплохо!'; }
+        else if (percent >= 40) { grade = 'Повтори ещё!'; }
+        else { grade = 'Тренируйся больше!'; }
+        
+        resultStats.innerHTML = `
+            Правильно: <span>${correctAnswers}</span> из <span>${totalWords}</span><br>
+            <span class="grade">${grade} (${percent}%)</span>
+        `;
+        
+        if (errorWords.length === 0) {
+            resultErrors.classList.add('hidden-errors');
+            errorsList.innerHTML = '';
+        } else {
+            resultErrors.classList.remove('hidden-errors');
+            errorsList.innerHTML = errorWords.map(word => 
+                `<div class="error-word">${word}</div>`
+            ).join('');
+        }
+    }
+
+    // =============================================================
+    // ЗАВЕРШИТЬ ДИКТАНТ
+    // =============================================================
+    function finishDictation() {
+        if (!isGameActive || isFinished) return;
+        showResults();
+    }
+
+    // =============================================================
+    // ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+    // =============================================================
+    function showMainScreen() {
+        gameScreen.classList.remove('active');
+        resultScreen.classList.remove('active');
+        mainScreen.classList.remove('hidden');
+        if (speechSynth) speechSynth.cancel();
+        isGameActive = false;
+        isWaitingForNext = false;
+        isFinished = false;
+        wordInput.disabled = true;
+        checkBtn.disabled = true;
+        repeatBtn.disabled = true;
+        finishBtn.disabled = false;
+        errorWords = [];
+        hideMessage();
+        statusIcon.classList.remove('finished');
+        statusText.className = 'word-status-text';
+        statusText.textContent = 'Слово произносится...';
+        stats.innerHTML = 'Правильно: <span id="correctCount">0</span> из <span id="totalCount">0</span>';
+        resultErrors.classList.remove('hidden-errors');
+        playBtn.style.display = 'flex';
+    }
+
+    function startGame() {
+        const selectedClassesList = Array.from(selectedClasses);
+        
+        if (selectedClassesList.length === 0) {
+            showMessage('Выберите хотя бы один класс!', 'error');
+            return;
+        }
+
+        selectedWords = [];
+        selectedClassesList.forEach(cls => {
+            if (wordsByClass[cls]) {
+                selectedWords = selectedWords.concat(wordsByClass[cls]);
+            }
+        });
+
+        selectedWords = [...new Set(selectedWords.filter(word => word && word.trim() !== ''))];
+
+        if (selectedWords.length === 0) {
+            showMessage('Нет слов для выбранных классов', 'error');
+            return;
+        }
+
+        selectedWords = shuffleArray(selectedWords);
+
+        total = 0;
+        correct = 0;
+        wordIndex = 0;
+        isFinished = false;
+        errorWords = [];
+        
+        statusIcon.classList.remove('finished');
+        statusText.className = 'word-status-text';
+        statusText.textContent = 'Слово произносится...';
+        
+        document.getElementById('correctCount').textContent = '0';
+        document.getElementById('totalCount').textContent = '0';
+        
+        totalNum.textContent = selectedWords.length;
+
+        mainScreen.classList.add('hidden');
+        gameScreen.classList.add('active');
+        resultScreen.classList.remove('active');
+        hideMessage();
+
+        isGameActive = true;
+        isWaitingForNext = false;
+        finishBtn.disabled = false;
+
+        playBtn.style.display = 'none';
+
+        nextWord();
+    }
+
+    // =============================================================
+    // СЛЕДУЮЩЕЕ СЛОВО
+    // =============================================================
+    function nextWord() {
+        if (isFinished) return;
+        
+        if (selectedWords.length === 0 || wordIndex >= selectedWords.length) {
+            showResults();
+            playBtn.style.display = 'flex';
+            return;
+        }
+
+        currentWord = selectedWords[wordIndex];
+        wordIndex++;
+
+        currentNum.textContent = wordIndex;
+
+        hideMessage();
+
+        const speakerIcon = statusIcon.querySelector('.speaker-icon');
+        const pencilIcon = statusIcon.querySelector('.pencil-icon');
+        if (speakerIcon) speakerIcon.style.display = 'block';
+        if (pencilIcon) pencilIcon.style.display = 'none';
+        
+        statusIcon.style.animation = 'pulse 0.8s ease-in-out infinite';
+        statusText.textContent = 'Слово произносится...';
+        statusText.className = 'word-status-text active';
+
+        speakWord(currentWord);
+
+        wordInput.value = '';
+        wordInput.disabled = true;
+        checkBtn.disabled = true;
+        repeatBtn.disabled = false;
+
+        isWaitingForNext = false;
+    }
+
+    // =============================================================
+    // ПРОВЕРИТЬ
+    // =============================================================
+    function checkWord() {
+        if (!isGameActive || !currentWord || isWaitingForNext || isFinished) return;
+
+        const userInput = wordInput.value.trim().toLowerCase();
+        if (!userInput) {
+            showMessage('Введите слово!', 'error');
+            return;
+        }
+
+        total++;
+
+        if (userInput === currentWord) {
+            correct++;
+            showMessage('Правильно! Молодец!', 'success');
+        } else {
+            errorWords.push(currentWord);
+            showErrorWithCorrectAnswer(userInput, currentWord);
+        }
+
+        document.getElementById('correctCount').textContent = correct;
+        document.getElementById('totalCount').textContent = total;
+
+        wordInput.disabled = true;
+        checkBtn.disabled = true;
+        repeatBtn.disabled = true;
+        isWaitingForNext = true;
+
+        setTimeout(() => {
+            if (!isFinished) {
+                nextWord();
+            }
+        }, 3000);
+    }
+
+    // =============================================================
+    // ОШИБКА
+    // =============================================================
+    function showErrorWithCorrectAnswer(wrongWord, correctWord) {
+        messageDiv.className = 'message error';
+        messageDiv.style.display = 'block';
+        messageDiv.innerHTML = `
+            Неправильно!
+            <div class="wrong-answer">
+                Вы написали: <span>${wrongWord}</span>
+                <span class="arrow">→</span>
+                Правильно: ${correctWord}
+            </div>
+            <div class="correct-answer">
+                Запомните: <strong>${correctWord}</strong>
+            </div>
+        `;
+    }
+
+    // =============================================================
+    // СООБЩЕНИЯ
+    // =============================================================
+    function showMessage(text, type) {
+        messageDiv.className = 'message ' + type;
+        messageDiv.style.display = 'block';
+        messageDiv.innerHTML = text;
+    }
+
+    function hideMessage() {
+        messageDiv.style.display = 'none';
+        messageDiv.className = 'message';
+        messageDiv.innerHTML = '';
+    }
+
+    // =============================================================
+    // ВСПОМОГАТЕЛЬНЫЕ
+    // =============================================================
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // =============================================================
+    // СОБЫТИЯ
+    // =============================================================
+    playBtn.addEventListener('click', startGame);
+    menuBtnFromGame.addEventListener('click', function() {
+        showMainScreen();
+        playBtn.style.display = 'flex';
+    });
+    resultMenuBtn.addEventListener('click', function() {
+        showMainScreen();
+        playBtn.style.display = 'flex';
+    });
+    resultRetryBtn.addEventListener('click', function() {
+        startGame();
+    });
+    finishBtn.addEventListener('click', finishDictation);
+    checkBtn.addEventListener('click', checkWord);
+    repeatBtn.addEventListener('click', repeatWord);
+
+    wordInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && !this.disabled && !isWaitingForNext && !isFinished) {
+            checkWord();
+        }
+    });
+
+    // =============================================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // =============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        initSpeech();
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = () => {
+                window.speechSynthesis.getVoices();
+            };
+        }
+        playBtn.style.display = 'flex';
+    });
+
+    console.log('Приложение "Словарные слова" загружено!');
+</script>
+
+</body>
+</html>
