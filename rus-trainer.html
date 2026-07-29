@@ -35,6 +35,10 @@
             align-items: center;
             max-width: 548px;
             width: 100%;
+            max-height: 100vh;
+            height: 100%;
+            justify-content: center;
+            padding: 5px 0;
         }
 
         /* ============================================================ */
@@ -42,11 +46,11 @@
         /* ============================================================ */
         .main-title {
             font-family: 'Fredoka One', 'Nunito', sans-serif;
-            font-size: 42px;
+            font-size: 32px;
             font-weight: 900;
             color: #F95F29;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             letter-spacing: 1px;
             line-height: 1.1;
             text-shadow: 
@@ -55,6 +59,7 @@
                 -3px 3px 0 #FFFFFF,
                 3px 3px 0 #FFFFFF,
                 0px 7px 13px #DCB160;
+            flex-shrink: 0;
         }
 
         /* ============================================================ */
@@ -64,18 +69,103 @@
             position: relative;
             width: 100%;
             height: auto;
-            min-height: 266px;
+            min-height: 200px;
             background: #FFFFFF;
             box-shadow: 0px 4px 15.8px #FFD878;
             border-radius: 20px;
-            padding: 35px 40px;
+            padding: 20px 25px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
         /* ============================================================ */
-        /* КНОПКА "НАЧАТЬ ТРЕНИРОВКУ" (ПОД КОНТЕЙНЕРОМ) */
+        /* КНОПКИ НАД БЕЛЫМ КОНТЕЙНЕРОМ (НА ФОНЕ) */
+        /* ============================================================ */
+        .floating-buttons {
+            position: relative;
+            width: 100%;
+            max-width: 548px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            flex-shrink: 0;
+            padding: 0 4px;
+        }
+
+        .btn-menu-custom {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 14px;
+            gap: 4px;
+            height: 38px;
+            background: #1978C3;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .btn-menu-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            background: #1a86d4;
+        }
+        .btn-menu-custom:active {
+            transform: scale(0.97);
+        }
+
+        .btn-finish {
+            background: #FA5D4B;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Nunito', 'Segoe UI', sans-serif;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+            border: 3px solid #FFFFFF;
+            transform: translateY(0);
+            white-space: nowrap;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            background: #FA5D4B;
+        }
+        .btn-finish:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            background: #e84a38;
+        }
+        .btn-finish:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+        .btn-finish:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ============================================================ */
+        /* КНОПКА "НАЧАТЬ ТРЕНИРОВКУ" */
         /* ============================================================ */
         .btn-play {
             box-sizing: border-box;
@@ -83,18 +173,18 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding: 10px 15px;
+            padding: 8px 15px;
             gap: 5px;
             width: 100%;
             max-width: 490px;
-            height: 86px;
-            margin-top: 25px;
+            height: 56px;
+            margin-top: 12px;
             background: linear-gradient(180deg, #88B913 0%, #4BA411 100%);
-            border: 7px solid #FFFFFF;
+            border: 5px solid #FFFFFF;
             box-shadow: 0px 7px 13px #DCB160;
             border-radius: 50px;
             font-family: 'Nunito', 'Segoe UI', sans-serif;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 800;
             color: #FFFFFF;
             cursor: pointer;
@@ -103,6 +193,7 @@
             line-height: 1;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            flex-shrink: 0;
         }
 
         .btn-play:hover:not(:disabled) {
@@ -125,6 +216,9 @@
         .screen-main {
             display: block;
             width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         .screen-main.hidden {
             display: none;
@@ -132,39 +226,47 @@
 
         .main-subtitle {
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             color: #888;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
+            flex-shrink: 0;
         }
         .class-selection {
-            margin-bottom: 20px;
+            margin-bottom: 8px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
         .class-selection .label {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: #555;
             display: block;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             text-align: center;
+            flex-shrink: 0;
         }
 
         .class-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex: 1;
+            align-content: start;
         }
 
         .class-btn {
             position: relative;
-            padding: 14px 8px 10px;
-            font-size: 15px;
+            padding: 10px 6px 8px;
+            font-size: 13px;
             font-weight: 700;
             border: none;
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.25s ease;
             color: #fff;
@@ -175,25 +277,25 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2px;
-            min-height: 72px;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+            gap: 1px;
+            min-height: 50px;
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
             transform: translateY(0);
             background: #e8e8e8;
             color: #555;
         }
         .class-btn:active {
-            transform: translateY(4px);
+            transform: translateY(3px);
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
         }
         .class-btn .check-box {
             position: absolute;
-            top: 6px;
-            right: 8px;
-            width: 20px;
-            height: 20px;
+            top: 4px;
+            right: 6px;
+            width: 16px;
+            height: 16px;
             background: #ffffff;
-            border-radius: 4px;
+            border-radius: 3px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -202,7 +304,7 @@
             border: none;
         }
         .class-btn .check-box .check-mark {
-            font-size: 14px;
+            font-size: 11px;
             opacity: 0;
             transition: opacity 0.3s ease;
             color: #4CAF50;
@@ -214,7 +316,7 @@
         .class-btn:not(.active) {
             background: #f0f0f0;
             color: #555;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
         }
         .class-btn:not(.active) .class-number {
             color: #555;
@@ -227,31 +329,31 @@
             border: none;
         }
 
-        .class-btn.active[data-class="1"] { background: linear-gradient(145deg, #FFD42A, #f5c800); box-shadow: 0 4px 0 #c9a100; color: #fff; }
-        .class-btn.active[data-class="2"] { background: linear-gradient(145deg, #A0CC3A, #8cb82e); box-shadow: 0 4px 0 #6f9424; color: #fff; }
-        .class-btn.active[data-class="3"] { background: linear-gradient(145deg, #529CE5, #3a88d1); box-shadow: 0 4px 0 #2a6ea8; color: #fff; }
-        .class-btn.active[data-class="4"] { background: linear-gradient(145deg, #B371E4, #a05cd6); box-shadow: 0 4px 0 #7f44b0; color: #fff; }
-        .class-btn.active[data-class="5"] { background: linear-gradient(145deg, #F39B2B, #e0891a); box-shadow: 0 4px 0 #b86e14; color: #fff; }
-        .class-btn.active[data-class="6"] { background: linear-gradient(145deg, #29C3C2, #1eabaa); box-shadow: 0 4px 0 #178887; color: #fff; }
-        .class-btn.active[data-class="7"] { background: linear-gradient(145deg, #AF5FD1, #9c4abf); box-shadow: 0 4px 0 #7d3999; color: #fff; }
-        .class-btn.active[data-class="8"] { background: linear-gradient(145deg, #FA5D4B, #e84a38); box-shadow: 0 4px 0 #c03a2a; color: #fff; }
-        .class-btn.active[data-class="9"] { background: linear-gradient(145deg, #28B3CE, #1e9db5); box-shadow: 0 4px 0 #177d91; color: #fff; }
-        .class-btn.active[data-class="10"] { background: linear-gradient(145deg, #A9CD2E, #95b827); box-shadow: 0 4px 0 #77941e; color: #fff; }
-        .class-btn.active[data-class="11"] { background: linear-gradient(145deg, #FF6295, #f04a80); box-shadow: 0 4px 0 #c93a66; color: #fff; }
+        .class-btn.active[data-class="1"] { background: linear-gradient(145deg, #FFD42A, #f5c800); box-shadow: 0 3px 0 #c9a100; color: #fff; }
+        .class-btn.active[data-class="2"] { background: linear-gradient(145deg, #A0CC3A, #8cb82e); box-shadow: 0 3px 0 #6f9424; color: #fff; }
+        .class-btn.active[data-class="3"] { background: linear-gradient(145deg, #529CE5, #3a88d1); box-shadow: 0 3px 0 #2a6ea8; color: #fff; }
+        .class-btn.active[data-class="4"] { background: linear-gradient(145deg, #B371E4, #a05cd6); box-shadow: 0 3px 0 #7f44b0; color: #fff; }
+        .class-btn.active[data-class="5"] { background: linear-gradient(145deg, #F39B2B, #e0891a); box-shadow: 0 3px 0 #b86e14; color: #fff; }
+        .class-btn.active[data-class="6"] { background: linear-gradient(145deg, #29C3C2, #1eabaa); box-shadow: 0 3px 0 #178887; color: #fff; }
+        .class-btn.active[data-class="7"] { background: linear-gradient(145deg, #AF5FD1, #9c4abf); box-shadow: 0 3px 0 #7d3999; color: #fff; }
+        .class-btn.active[data-class="8"] { background: linear-gradient(145deg, #FA5D4B, #e84a38); box-shadow: 0 3px 0 #c03a2a; color: #fff; }
+        .class-btn.active[data-class="9"] { background: linear-gradient(145deg, #28B3CE, #1e9db5); box-shadow: 0 3px 0 #177d91; color: #fff; }
+        .class-btn.active[data-class="10"] { background: linear-gradient(145deg, #A9CD2E, #95b827); box-shadow: 0 3px 0 #77941e; color: #fff; }
+        .class-btn.active[data-class="11"] { background: linear-gradient(145deg, #FF6295, #f04a80); box-shadow: 0 3px 0 #c93a66; color: #fff; }
 
-        .class-btn.active .class-number { color: #fff; }
-        .class-btn.active .class-label { color: rgba(255, 255, 255, 0.85); }
+        .class-btn.active .class-number { color: #fff; font-size: 20px; }
+        .class-btn.active .class-label { color: rgba(255, 255, 255, 0.85); font-size: 10px; }
         .class-btn.active .check-box { background: rgba(255, 255, 255, 0.25); border: none; }
 
         .class-btn .class-number {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             font-family: 'Fredoka One', 'Nunito', sans-serif;
             line-height: 1;
             transition: color 0.3s ease;
         }
         .class-btn .class-label {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -259,25 +361,25 @@
         }
         .class-btn:hover:not(.active) {
             transform: translateY(-2px);
-            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
         }
         .class-btn.active:hover {
             transform: translateY(-2px);
         }
-        .class-btn.active:hover[data-class="1"] { box-shadow: 0 6px 0 #c9a100; }
-        .class-btn.active:hover[data-class="2"] { box-shadow: 0 6px 0 #6f9424; }
-        .class-btn.active:hover[data-class="3"] { box-shadow: 0 6px 0 #2a6ea8; }
-        .class-btn.active:hover[data-class="4"] { box-shadow: 0 6px 0 #7f44b0; }
-        .class-btn.active:hover[data-class="5"] { box-shadow: 0 6px 0 #b86e14; }
-        .class-btn.active:hover[data-class="6"] { box-shadow: 0 6px 0 #178887; }
-        .class-btn.active:hover[data-class="7"] { box-shadow: 0 6px 0 #7d3999; }
-        .class-btn.active:hover[data-class="8"] { box-shadow: 0 6px 0 #c03a2a; }
-        .class-btn.active:hover[data-class="9"] { box-shadow: 0 6px 0 #177d91; }
-        .class-btn.active:hover[data-class="10"] { box-shadow: 0 6px 0 #77941e; }
-        .class-btn.active:hover[data-class="11"] { box-shadow: 0 6px 0 #c93a66; }
+        .class-btn.active:hover[data-class="1"] { box-shadow: 0 4px 0 #c9a100; }
+        .class-btn.active:hover[data-class="2"] { box-shadow: 0 4px 0 #6f9424; }
+        .class-btn.active:hover[data-class="3"] { box-shadow: 0 4px 0 #2a6ea8; }
+        .class-btn.active:hover[data-class="4"] { box-shadow: 0 4px 0 #7f44b0; }
+        .class-btn.active:hover[data-class="5"] { box-shadow: 0 4px 0 #b86e14; }
+        .class-btn.active:hover[data-class="6"] { box-shadow: 0 4px 0 #178887; }
+        .class-btn.active:hover[data-class="7"] { box-shadow: 0 4px 0 #7d3999; }
+        .class-btn.active:hover[data-class="8"] { box-shadow: 0 4px 0 #c03a2a; }
+        .class-btn.active:hover[data-class="9"] { box-shadow: 0 4px 0 #177d91; }
+        .class-btn.active:hover[data-class="10"] { box-shadow: 0 4px 0 #77941e; }
+        .class-btn.active:hover[data-class="11"] { box-shadow: 0 4px 0 #c93a66; }
 
         .class-btn:active {
-            transform: translateY(4px) !important;
+            transform: translateY(3px) !important;
         }
         .class-btn.active:active {
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2) !important;
@@ -285,15 +387,16 @@
 
         .selection-hint {
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
             color: #999;
-            margin-bottom: 20px;
+            margin-bottom: 4px;
             font-style: italic;
+            flex-shrink: 0;
         }
 
         .btn {
-            padding: 14px 24px;
-            font-size: 17px;
+            padding: 10px 18px;
+            font-size: 15px;
             font-weight: 700;
             border: none;
             border-radius: 12px;
@@ -328,83 +431,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             width: 100%;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 5px;
         }
 
         .game-top-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .btn-menu-custom {
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 15px;
-            gap: 5px;
-            width: 141px;
-            height: 46px;
-            background: #1978C3;
-            border: 3px solid #FFFFFF;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
-            border-radius: 15px;
-            font-family: 'Nunito', 'Segoe UI', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            color: #FFFFFF;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-            line-height: 1;
-            flex-shrink: 0;
-        }
-        .btn-menu-custom:hover {
-            transform: translateY(-2px);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-            background: #1a86d4;
-        }
-        .btn-menu-custom:active {
-            transform: scale(0.97);
-        }
-
-        .btn-finish {
-            background: #FA5D4B;
-            color: white;
-            padding: 10px 18px;
-            font-size: 14px;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: 'Nunito', 'Segoe UI', sans-serif;
-            box-shadow: 0 4px 0 #c03a2a;
-            transform: translateY(0);
-            white-space: nowrap;
-        }
-        .btn-finish:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #c03a2a;
-        }
-        .btn-finish:active:not(:disabled) {
-            transform: translateY(4px);
-            box-shadow: 0 1px 0 #c03a2a;
-        }
-        .btn-finish:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: 0 4px 0 #c03a2a;
+            gap: 8px;
         }
 
         .game-progress {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #555;
             white-space: nowrap;
@@ -416,18 +456,18 @@
 
         .game-instruction {
             text-align: center;
-            font-size: 20px;
+            font-size: 17px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             font-family: 'Nunito', sans-serif;
         }
 
         .word-status-block {
             text-align: center;
-            padding: 25px 20px;
-            margin-bottom: 20px;
-            min-height: 110px;
+            padding: 15px 15px;
+            margin-bottom: 12px;
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -438,23 +478,23 @@
         }
 
         .word-status-icon {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #1978C3;
             border: 3px solid #FFFFFF;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
             border-radius: 50%;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
             animation: pulse 1.5s ease-in-out infinite;
             transition: all 0.3s ease;
             flex-shrink: 0;
         }
         .word-status-icon svg {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             fill: none;
             stroke: #FFFFFF;
             stroke-width: 2;
@@ -466,15 +506,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25); }
-            50% { transform: scale(1.08); box-shadow: 0px 8px 20px rgba(25, 120, 195, 0.5); }
+            0%, 100% { transform: scale(1); box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25); }
+            50% { transform: scale(1.08); box-shadow: 0px 6px 15px rgba(25, 120, 195, 0.5); }
         }
 
         .word-status-text {
-            font-size: 18px;
+            font-size: 16px;
             color: #888;
             font-weight: 600;
-            margin-top: 5px;
+            margin-top: 3px;
             font-family: 'Nunito', sans-serif;
         }
         .word-status-text.active {
@@ -483,7 +523,7 @@
         }
 
         .input-row {
-            margin-bottom: 18px;
+            margin-bottom: 12px;
             width: 100%;
         }
         .input-row input {
@@ -491,16 +531,16 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 10px 23px;
-            gap: 10px;
+            padding: 8px 16px;
+            gap: 8px;
             width: 100%;
-            height: 39px;
+            height: 36px;
             background: #FFFFFF;
             border: 1px solid #ADBFDB;
-            box-shadow: 0px 4px 7.3px rgba(104, 109, 208, 0.25);
-            border-radius: 10px;
+            box-shadow: 0px 3px 5px rgba(104, 109, 208, 0.2);
+            border-radius: 8px;
             font-family: 'Nunito', 'Segoe UI', sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             color: #333;
             outline: none;
             transition: border-color 0.3s, box-shadow 0.3s;
@@ -508,7 +548,7 @@
         }
         .input-row input:focus {
             border-color: #667eea;
-            box-shadow: 0px 4px 12px rgba(104, 109, 208, 0.4);
+            box-shadow: 0px 3px 8px rgba(104, 109, 208, 0.35);
         }
         .input-row input:disabled {
             background: #f5f5f5;
@@ -522,39 +562,39 @@
 
         .game-buttons {
             display: flex;
-            gap: 14px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 10px;
             width: 100%;
             justify-content: center;
         }
         .game-buttons .btn {
             flex: 1;
             min-width: 0;
-            padding: 10px 20px;
-            height: 52px;
-            font-size: 16px;
+            padding: 8px 14px;
+            height: 44px;
+            font-size: 14px;
             font-weight: 700;
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             white-space: nowrap;
             font-family: 'Nunito', sans-serif;
         }
 
         .btn-check {
             background: linear-gradient(176.28deg, #76C64A 2.85%, #48AE0A 96.77%);
-            box-shadow: 0px 4px 7.1px #478E3B;
+            box-shadow: 0px 3px 5px #478E3B;
             color: #FFFFFF;
             flex: 1;
         }
         .btn-check:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0px 6px 12px #478E3B;
+            box-shadow: 0px 4px 8px #478E3B;
             background: linear-gradient(176.28deg, #80d454 2.85%, #4fb80e 96.77%);
         }
         .btn-check:active:not(:disabled) {
@@ -568,13 +608,13 @@
 
         .btn-repeat {
             background: linear-gradient(176.28deg, #FDB52D 5.89%, #FD9D0A 97.73%);
-            box-shadow: 0px 4px 7.1px #D97805;
+            box-shadow: 0px 3px 5px #D97805;
             color: #FFFFFF;
             flex: 1;
         }
         .btn-repeat:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0px 6px 12px #D97805;
+            box-shadow: 0px 4px 8px #D97805;
             background: linear-gradient(176.28deg, #fec04a 5.89%, #fdaa1a 97.73%);
         }
         .btn-repeat:active:not(:disabled) {
@@ -588,20 +628,20 @@
 
         .btn-repeat svg,
         .btn-check svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             flex: none;
         }
 
         .stats {
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
             color: #555;
-            padding: 10px;
+            padding: 8px;
             background: #f8f9fa;
-            border-radius: 10px;
-            margin-top: 10px;
-            min-height: 38px;
+            border-radius: 8px;
+            margin-top: 8px;
+            min-height: 34px;
             width: 100%;
             font-weight: 600;
             font-family: 'Nunito', sans-serif;
@@ -613,13 +653,13 @@
 
         .message {
             text-align: center;
-            padding: 12px 16px;
-            margin-top: 10px;
-            border-radius: 12px;
+            padding: 10px 14px;
+            margin-top: 8px;
+            border-radius: 10px;
             font-weight: 700;
             display: none;
             animation: slideIn 0.3s ease;
-            font-size: 15px;
+            font-size: 14px;
             width: 100%;
             font-family: 'Nunito', sans-serif;
         }
@@ -644,26 +684,26 @@
 
         .message .correct-answer {
             display: block;
-            margin-top: 6px;
-            font-size: 19px;
+            margin-top: 4px;
+            font-size: 17px;
             color: #2e7d32;
             background: #c8e6c9;
-            padding: 4px 12px;
-            border-radius: 8px;
+            padding: 3px 10px;
+            border-radius: 6px;
             font-weight: 700;
         }
         .message .wrong-answer {
             display: block;
-            margin-top: 6px;
-            font-size: 16px;
+            margin-top: 4px;
+            font-size: 15px;
         }
         .message .wrong-answer span {
             text-decoration: line-through;
             opacity: 0.6;
         }
         .message .wrong-answer .arrow {
-            margin: 0 8px;
-            font-size: 20px;
+            margin: 0 6px;
+            font-size: 18px;
         }
 
         /* ========== ЭКРАН РЕЗУЛЬТАТОВ ========== */
@@ -679,28 +719,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             width: 100%;
         }
 
         .result-title {
             text-align: center;
             font-family: 'Fredoka One', 'Nunito', sans-serif;
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 900;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             letter-spacing: 1px;
         }
 
         .result-stats {
             text-align: center;
-            font-size: 18px;
+            font-size: 16px;
             color: #555;
-            margin-bottom: 20px;
-            padding: 15px;
+            margin-bottom: 15px;
+            padding: 12px;
             background: #f8f9fa;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
         }
         .result-stats span {
@@ -709,38 +749,38 @@
         }
         .result-stats .grade {
             display: block;
-            margin-top: 8px;
-            font-size: 22px;
+            margin-top: 6px;
+            font-size: 20px;
             color: #333;
         }
 
         .result-errors {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .result-errors .errors-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #555;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         .result-errors .errors-list {
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            padding-left: 20px;
+            gap: 3px;
+            padding-left: 15px;
         }
         .result-errors .error-word {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             color: #c62828;
             list-style: none;
         }
         .result-errors .no-errors {
             text-align: center;
-            font-size: 16px;
+            font-size: 15px;
             color: #4CAF50;
             font-weight: 700;
-            padding: 10px;
+            padding: 8px;
         }
         .result-errors.hidden-errors {
             display: none;
@@ -748,8 +788,8 @@
 
         .result-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 8px;
             justify-content: space-between;
         }
 
@@ -759,16 +799,15 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding: 10px 15px;
-            gap: 5px;
-            width: 141px;
-            height: 46px;
+            padding: 8px 12px;
+            gap: 4px;
+            height: 38px;
             background: #1978C3;
             border: 3px solid #FFFFFF;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
-            border-radius: 15px;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
             font-family: 'Nunito', 'Segoe UI', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #FFFFFF;
             cursor: pointer;
@@ -779,7 +818,7 @@
         }
         .btn-result-menu:hover {
             transform: translateY(-2px);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
             background: #1a86d4;
         }
         .btn-result-menu:active {
@@ -792,16 +831,15 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding: 10px 15px;
-            gap: 5px;
-            width: 141px;
-            height: 46px;
+            padding: 8px 12px;
+            gap: 4px;
+            height: 38px;
             background: #FA5D4B;
             border: 3px solid #FFFFFF;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
-            border-radius: 15px;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
             font-family: 'Nunito', 'Segoe UI', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #FFFFFF;
             cursor: pointer;
@@ -812,7 +850,7 @@
         }
         .btn-result-retry:hover {
             transform: translateY(-2px);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
             background: #e84a38;
         }
         .btn-result-retry:active {
@@ -820,139 +858,92 @@
         }
 
         /* ============================================================ */
-        /* АДАПТИВ */
+        /* АДАПТИВ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
         /* ============================================================ */
+        
+        /* Телефоны в портретной ориентации (вертикальной) */
         @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+            
+            .wrapper {
+                justify-content: flex-start;
+                padding-top: 8px;
+            }
+            
             .main-title {
-                font-size: 32px;
-                text-shadow: 
-                    -2px -2px 0 #FFFFFF,
-                    2px -2px 0 #FFFFFF,
-                    -2px 2px 0 #FFFFFF,
-                    2px 2px 0 #FFFFFF,
-                    0px 5px 10px #DCB160;
+                font-size: 26px;
+                margin-bottom: 6px;
             }
-
+            
             .container {
-                padding: 25px 20px;
+                padding: 16px 18px;
+                min-height: auto;
                 border-radius: 16px;
-                min-height: auto;
             }
-
+            
             .btn-play {
-                height: 70px;
-                font-size: 20px;
-                border-width: 5px;
-                margin-top: 20px;
-                border-radius: 40px;
+                height: 50px;
+                font-size: 16px;
+                margin-top: 10px;
+                border-width: 4px;
             }
-
-            .class-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 8px;
-            }
+            
             .class-btn {
-                padding: 10px 6px 8px;
-                font-size: 13px;
-                min-height: 62px;
-                border-radius: 12px;
+                min-height: 44px;
+                padding: 8px 4px 6px;
             }
-            .class-btn .class-number { font-size: 20px; }
-            .class-btn .class-label { font-size: 10px; }
-            .class-btn .check-box {
-                width: 16px;
-                height: 16px;
-                top: 4px;
-                right: 5px;
+            .class-btn .class-number {
+                font-size: 17px;
             }
-            .class-btn .check-box .check-mark { font-size: 11px; }
-
-            .game-top-bar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
+            .class-btn .class-label {
+                font-size: 9px;
             }
-            .game-top-left {
-                justify-content: space-between;
+            .class-grid {
+                gap: 6px;
             }
-            .btn-finish {
-                padding: 8px 14px;
-                font-size: 13px;
+            .main-subtitle {
+                font-size: 12px;
+                margin-bottom: 6px;
             }
-            .game-instruction { font-size: 17px; }
-            .game-buttons {
-                flex-direction: column;
-                gap: 10px;
+            .selection-hint {
+                font-size: 11px;
+                margin-bottom: 4px;
             }
-            .game-buttons .btn {
-                width: 100% !important;
-                height: 48px !important;
-                padding: 10px 16px !important;
-                font-size: 15px !important;
-                flex: none !important;
+            .class-selection .label {
+                font-size: 12px;
+                margin-bottom: 6px;
             }
-            .word-status-block {
-                padding: 15px 10px;
-                min-height: auto;
-            }
-            .word-status-icon {
-                width: 64px;
-                height: 64px;
-            }
-            .word-status-icon svg {
-                width: 32px;
-                height: 32px;
-            }
-            .word-status-text { font-size: 16px; }
-
-            .btn-menu-custom {
-                width: auto;
-                padding: 8px 14px;
-                height: 38px;
+            .game-progress {
                 font-size: 13px;
             }
-            .btn-menu-custom svg {
-                width: 14px;
-                height: 14px;
-            }
-            .input-row input {
-                height: 42px;
-                padding: 8px 16px;
+            .game-instruction {
                 font-size: 16px;
             }
-            .btn-check svg,
-            .btn-repeat svg {
-                width: 18px;
-                height: 18px;
+            .floating-buttons {
+                padding: 0 2px;
             }
-            .game-progress { font-size: 14px; }
-            .selection-hint { font-size: 12px; }
-
-            .result-title { font-size: 26px; }
-            .result-stats { font-size: 16px; }
-            .result-buttons { 
-                flex-direction: row;
-                gap: 10px;
+            .btn-menu-custom {
+                height: 34px;
+                font-size: 12px;
+                padding: 4px 10px;
             }
-            .btn-result-menu,
-            .btn-result-retry {
-                width: auto;
-                flex: 1;
-                padding: 8px 12px;
-                height: 40px;
-                font-size: 14px;
-            }
-            .result-errors .errors-list {
-                padding-left: 10px;
-            }
-            .result-errors .error-word {
-                font-size: 14px;
+            .btn-finish {
+                height: 34px;
+                font-size: 12px;
+                padding: 4px 10px;
             }
         }
 
+        /* Маленькие телефоны (до 400px) */
         @media (max-width: 400px) {
+            body {
+                padding: 8px;
+            }
+            
             .main-title {
-                font-size: 26px;
+                font-size: 22px;
                 text-shadow: 
                     -2px -2px 0 #FFFFFF,
                     2px -2px 0 #FFFFFF,
@@ -960,102 +951,301 @@
                     2px 2px 0 #FFFFFF,
                     0px 4px 8px #DCB160;
             }
-
+            
             .container {
-                padding: 18px 14px;
-                border-radius: 16px;
+                padding: 12px 14px;
+                border-radius: 14px;
             }
-
+            
             .btn-play {
-                height: 60px;
-                font-size: 16px;
-                border-width: 4px;
-                margin-top: 15px;
+                height: 44px;
+                font-size: 14px;
+                border-width: 3px;
+                margin-top: 8px;
                 border-radius: 30px;
             }
-
+            
             .class-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
+                gap: 5px;
             }
+            
             .class-btn {
-                padding: 8px 4px 6px;
-                font-size: 12px;
-                min-height: 54px;
-                border-radius: 10px;
+                min-height: 40px;
+                padding: 6px 3px 5px;
+                border-radius: 8px;
+                font-size: 11px;
             }
-            .class-btn .class-number { font-size: 18px; }
-            .class-btn .class-label { font-size: 9px; }
+            .class-btn .class-number {
+                font-size: 16px;
+            }
+            .class-btn .class-label {
+                font-size: 8px;
+            }
             .class-btn .check-box {
                 width: 14px;
                 height: 14px;
                 top: 3px;
                 right: 4px;
             }
-            .class-btn .check-box .check-mark { font-size: 10px; }
-
+            .class-btn .check-box .check-mark {
+                font-size: 10px;
+            }
+            
+            .main-subtitle {
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+            .selection-hint {
+                font-size: 10px;
+            }
+            .class-selection .label {
+                font-size: 11px;
+            }
+            .floating-buttons {
+                padding: 0 2px;
+            }
             .btn-menu-custom {
-                padding: 5px 10px;
-                height: 32px;
-                font-size: 12px;
-                border-radius: 10px;
-            }
-            .btn-menu-custom svg {
-                width: 12px;
-                height: 12px;
-            }
-            .btn-finish {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            .game-buttons .btn {
-                height: 44px !important;
-                font-size: 14px !important;
-                border-radius: 12px !important;
-            }
-            .input-row input {
-                height: 38px;
-                font-size: 14px;
-                padding: 6px 14px;
+                height: 30px;
+                font-size: 11px;
+                padding: 4px 8px;
                 border-radius: 8px;
             }
+            .btn-finish {
+                height: 30px;
+                font-size: 11px;
+                padding: 4px 8px;
+                border-radius: 8px;
+            }
+        }
+
+        /* Телефоны в горизонтальной ориентации (ландшафт) */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                padding: 6px 12px;
+            }
+            
+            .wrapper {
+                justify-content: flex-start;
+                padding-top: 2px;
+            }
+            
+            .main-title {
+                font-size: 20px;
+                margin-bottom: 3px;
+                text-shadow: 
+                    -2px -2px 0 #FFFFFF,
+                    2px -2px 0 #FFFFFF,
+                    -2px 2px 0 #FFFFFF,
+                    2px 2px 0 #FFFFFF,
+                    0px 3px 6px #DCB160;
+            }
+            
+            .container {
+                padding: 10px 15px;
+                min-height: auto;
+                border-radius: 12px;
+            }
+            
+            .btn-play {
+                height: 38px;
+                font-size: 13px;
+                border-width: 3px;
+                margin-top: 5px;
+                border-radius: 25px;
+                max-width: 250px;
+            }
+            
+            .screen-main {
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 4px;
+            }
+            
+            .screen-main .main-subtitle {
+                font-size: 11px;
+                margin-bottom: 0;
+                width: 100%;
+            }
+            
+            .class-selection {
+                flex: 1;
+                min-width: 0;
+                margin-bottom: 0;
+            }
+            
+            .class-selection .label {
+                font-size: 11px;
+                margin-bottom: 3px;
+            }
+            
+            .class-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 4px;
+                margin-bottom: 0;
+            }
+            
+            .class-btn {
+                min-height: 32px;
+                padding: 4px 2px 3px;
+                border-radius: 6px;
+                font-size: 10px;
+                box-shadow: 0 2px 0 rgba(0, 0, 0, 0.15);
+            }
+            .class-btn .class-number {
+                font-size: 13px;
+            }
+            .class-btn .class-label {
+                font-size: 7px;
+            }
+            .class-btn .check-box {
+                width: 12px;
+                height: 12px;
+                top: 2px;
+                right: 3px;
+            }
+            .class-btn .check-box .check-mark {
+                font-size: 8px;
+            }
+            .class-btn:active {
+                transform: translateY(2px);
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+            }
+            
+            .selection-hint {
+                font-size: 9px;
+                margin-bottom: 3px;
+            }
+            
+            .game-top-bar {
+                margin-bottom: 5px;
+                gap: 4px;
+            }
+            .btn-menu-custom {
+                height: 30px;
+                font-size: 11px;
+                padding: 4px 8px;
+                border-radius: 8px;
+            }
+            .btn-menu-custom svg {
+                width: 10px;
+                height: 10px;
+            }
+            .btn-finish {
+                padding: 4px 10px;
+                font-size: 11px;
+                border-radius: 8px;
+                height: 30px;
+            }
+            .game-progress {
+                font-size: 12px;
+            }
+            .game-instruction {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
             .word-status-block {
-                padding: 10px 8px;
+                padding: 6px 10px;
+                min-height: 50px;
+                margin-bottom: 6px;
+                flex-direction: row;
+                gap: 12px;
+                justify-content: center;
             }
             .word-status-icon {
-                width: 56px;
-                height: 56px;
+                width: 36px;
+                height: 36px;
+                margin-bottom: 0;
             }
             .word-status-icon svg {
-                width: 28px;
-                height: 28px;
+                width: 20px;
+                height: 20px;
             }
-            .word-status-text { font-size: 14px; }
-            .game-instruction {
-                font-size: 15px;
-                margin-bottom: 15px;
+            .word-status-text {
+                font-size: 14px;
+                margin-top: 0;
+            }
+            .input-row {
+                margin-bottom: 6px;
+            }
+            .input-row input {
+                height: 30px;
+                font-size: 13px;
+                padding: 4px 10px;
+            }
+            .game-buttons {
+                margin-bottom: 6px;
+                gap: 6px;
+            }
+            .game-buttons .btn {
+                height: 34px;
+                font-size: 12px;
+                padding: 4px 10px;
+                border-radius: 8px;
+            }
+            .btn-check svg,
+            .btn-repeat svg {
+                width: 14px;
+                height: 14px;
             }
             .stats {
-                font-size: 13px;
-                padding: 8px;
-                min-height: 32px;
+                font-size: 11px;
+                padding: 4px;
+                min-height: 26px;
+                margin-top: 4px;
             }
             .message {
-                font-size: 13px;
-                padding: 10px 12px;
+                font-size: 12px;
+                padding: 6px 8px;
+                margin-top: 4px;
             }
-
-            .result-title { font-size: 22px; }
-            .result-stats { font-size: 14px; }
-            .result-errors .error-word { font-size: 13px; }
-            .btn-result-menu,
-            .btn-result-retry {
-                padding: 6px 10px;
-                height: 34px;
+            
+            .result-top-bar {
+                margin-bottom: 5px;
+            }
+            .result-title {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+            .result-stats {
+                font-size: 13px;
+                padding: 8px;
+                margin-bottom: 8px;
+            }
+            .result-stats .grade {
+                font-size: 17px;
+            }
+            .result-errors .errors-title {
+                font-size: 12px;
+            }
+            .result-errors .error-word {
                 font-size: 12px;
             }
             .result-errors .errors-list {
-                padding-left: 8px;
+                padding-left: 10px;
+                gap: 2px;
+            }
+            .btn-result-menu,
+            .btn-result-retry {
+                height: 30px;
+                font-size: 11px;
+                padding: 4px 10px;
+                border-radius: 8px;
+            }
+            .floating-buttons {
+                padding: 0 2px;
+                margin-bottom: 4px;
+            }
+            .btn-menu-custom {
+                height: 28px;
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            .btn-finish {
+                height: 28px;
+                font-size: 10px;
+                padding: 4px 8px;
             }
         }
     </style>
@@ -1068,6 +1258,19 @@
     <!-- ЗАГОЛОВОК НАД БЕЛЫМ КОНТЕЙНЕРОМ -->
     <!-- ============================================================ -->
     <div class="main-title">Словарные слова</div>
+
+    <!-- ============================================================ -->
+    <!-- КНОПКИ НАД БЕЛЫМ КОНТЕЙНЕРОМ (НА ФОНЕ) -->
+    <!-- ============================================================ -->
+    <div class="floating-buttons" id="floatingButtons">
+        <button class="btn-menu-custom" id="menuBtnFromGame">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5M12 19l-7-7 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            В меню
+        </button>
+        <button class="btn-finish" id="finishBtn">⏹ Завершить</button>
+    </div>
 
     <!-- ============================================================ -->
     <!-- БЕЛЫЙ КОНТЕЙНЕР -->
@@ -1091,16 +1294,9 @@
         <!-- ========================================================= -->
         <div class="screen-game" id="gameScreen">
             <div class="game-top-bar">
-                <button class="btn-menu-custom" id="menuBtnFromGame">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                        <path d="M19 12H5M12 19l-7-7 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    В меню
-                </button>
-                <button class="btn-finish" id="finishBtn">⏹ Завершить</button>
-            </div>
-            <div class="game-progress" style="text-align:center; margin-bottom:15px;">
-                Слово <span id="currentNum">1</span> из <span id="totalNum">30</span>
+                <div class="game-progress">
+                    Слово <span id="currentNum">1</span> из <span id="totalNum">30</span>
+                </div>
             </div>
             <div class="game-instruction">Прослушай слово и напиши его</div>
             <div class="word-status-block" id="wordStatusBlock">
@@ -1122,13 +1318,13 @@
             </div>
             <div class="game-buttons">
                 <button class="btn btn-check" id="checkBtn" disabled>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     Проверить
                 </button>
                 <button class="btn btn-repeat" id="repeatBtn" disabled>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" 
                               stroke="white" stroke-width="2" stroke-linejoin="round"/>
                         <path d="M17 8C18.5 9.5 18.5 14.5 17 16" 
@@ -1151,7 +1347,7 @@
         <div class="screen-result" id="resultScreen">
             <div class="result-top-bar">
                 <button class="btn-result-menu" id="resultMenuBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                         <path d="M19 12H5M12 19l-7-7 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     В меню
@@ -1176,6 +1372,14 @@
 </div>
 
 <script>
+    // =============================================================
+    // СЛОВАРЬ ФОНЕТИЧЕСКИХ ЗАМЕН ДЛЯ ПРОИЗНОШЕНИЯ
+    // =============================================================
+    const stressMap = {
+        'капель': 'капйэль',
+        'сорока': 'сарока',
+    };
+
     // =============================================================
     // СЛОВАРНЫЕ СЛОВА (1-11 КЛАССЫ)
     // =============================================================
@@ -1282,9 +1486,15 @@
             return;
         }
 
+        let phoneticWord = word;
+        if (stressMap[word]) {
+            phoneticWord = stressMap[word];
+            console.log(`🔊 Произношу: ${word} → ${phoneticWord}`);
+        }
+
         speechSynth.cancel();
 
-        const utterance = new SpeechSynthesisUtterance(word);
+        const utterance = new SpeechSynthesisUtterance(phoneticWord);
         utterance.lang = 'ru-RU';
         utterance.rate = 0.7;
         utterance.pitch = 1.0;
@@ -1362,7 +1572,7 @@
         if (speechSynth) speechSynth.cancel();
         speakWord(currentWord);
         repeatBtn.innerHTML = `
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" 
                       stroke="white" stroke-width="2" stroke-linejoin="round"/>
                 <path d="M17 8C18.5 9.5 18.5 14.5 17 16" 
@@ -1375,7 +1585,7 @@
         repeatBtn.disabled = true;
         setTimeout(() => {
             repeatBtn.innerHTML = `
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 14V10C3 9.44772 3.44772 9 4 9H7L12 4V20L7 15H4C3.44772 15 3 14.5523 3 14Z" 
                           stroke="white" stroke-width="2" stroke-linejoin="round"/>
                     <path d="M17 8C18.5 9.5 18.5 14.5 17 16" 
@@ -1678,7 +1888,8 @@
         playBtn.style.display = 'flex';
     });
 
-    console.log('Приложение "Словарные слова" загружено!');
+    console.log('📚 Приложение "Словарные слова" загружено!');
+    console.log('🔊 Словарь ударений:', stressMap);
 </script>
 
 </body>
