@@ -7,7 +7,9 @@
     <style>
         * {
             box-sizing: border-box;
-            user-select: none;
+            user-select: none; /* Запрещаем выделение текста */
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
         }
 
         body {
@@ -19,6 +21,8 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
+            /* Отключаем зум по двойному тапу на мобильных */
+            touch-action: manipulation; 
         }
 
         .container {
@@ -55,15 +59,12 @@
             width: 700px;
             height: 500px;
             border-radius: 36px;
+            /* Убрали эффект :active, чтобы тень не менялась при клике */
             box-shadow: inset 0 0 0 2px #aac9db, 0 8px 18px rgba(0, 0, 0, 0.1);
             background: #fefefe;
             cursor: crosshair;
-            transition: box-shadow 0.1s;
-            touch-action: none;
-        }
-
-        canvas:active {
-            box-shadow: inset 0 0 0 3px #7faec9, 0 8px 18px rgba(0, 0, 0, 0.1);
+            touch-action: none; /* Отключаем прокрутку/зум при касании холста */
+            outline: none; /* Убираем рамку фокуса */
         }
 
         .info-panel {
@@ -214,7 +215,7 @@
 
         let activePoint = null;
         let activeCoord = null;
-        let phase = 'idle'; // 'idle' | 'yShown' | 'bothShown'
+        let phase = 'idle';
 
         function toCoord(px, py) {
             return {
@@ -236,11 +237,11 @@
                 coordYSpan.textContent = '?';
                 coordXSpan.classList.remove('active');
                 coordYSpan.classList.remove('active');
-            } else if (phase === 'yShown') {
-                coordXSpan.textContent = '?';
-                coordYSpan.textContent = activeCoord.y;
-                coordXSpan.classList.remove('active');
-                coordYSpan.classList.add('active');
+            } else if (phase === 'xShown') {
+                coordXSpan.textContent = activeCoord.x;
+                coordYSpan.textContent = '?';
+                coordXSpan.classList.add('active');
+                coordYSpan.classList.remove('active');
             } else if (phase === 'bothShown') {
                 coordXSpan.textContent = activeCoord.x;
                 coordYSpan.textContent = activeCoord.y;
@@ -252,22 +253,19 @@
         function updateStepText() {
             if (phase === 'idle') {
                 stepIndicator.textContent = '👆 Нажми на клетку';
-            } else if (phase === 'yShown') {
-                stepIndicator.textContent = '⬇️ Y = ' + activeCoord.y + ' → нажми ещё раз';
+            } else if (phase === 'xShown') {
+                stepIndicator.textContent = '➡️ X = ' + activeCoord.x + ' → нажми ещё раз';
             } else {
                 stepIndicator.textContent = '✅ Точка (' + activeCoord.x + ', ' + activeCoord.y + ')';
             }
         }
 
-        // Проверка: попадает ли прямоугольник в запретную зону (пунктирная линия)
-        // Прямоугольник задаётся центром (cx, cy), шириной w, высотой h
         function intersectsLine(cx, cy, w, h, x1, y1, x2, y2, padding) {
             const left = cx - w / 2 - padding;
             const right = cx + w / 2 + padding;
             const top = cy - h / 2 - padding;
             const bottom = cy + h / 2 + padding;
 
-            // Прямоугольник, описывающий линию (с учётом padding)
             const lLeft = Math.min(x1, x2) - padding;
             const lRight = Math.max(x1, x2) + padding;
             const lTop = Math.min(y1, y2) - padding;
@@ -276,15 +274,11 @@
             return !(right < lLeft || left > lRight || bottom < lTop || top > lBottom);
         }
 
-        // Поиск свободного места для подписи
-        // axis: 'y' или 'x'
-        // Возвращает { x, y, align, baseline } — координаты и настройки текста
         function findFreeSpotForLabel(axis, value, labelText, dotPx, dotPy) {
             const textWidth = ctx.measureText(labelText).width;
-            const textHeight = 22; // приблизительная высота шрифта 18px
+            const textHeight = 22;
             const padding = 14;
 
-            // Точка на оси, где стоит засечка
             let axisPointX, axisPointY;
             if (axis === 'y') {
                 axisPointX = originX;
@@ -294,63 +288,37 @@
                 axisPointY = originY;
             }
 
-            // Пунктирные линии (для проверки пересечения)
-            // Для Y: горизонтальная линия от точки до оси Y: y = dotPy, x от originX до dotPx
-            // Для X: вертикальная линия от точки до оси X: x = dotPx, y от dotPy до originY
-            let line1 = null; // линия, которую строим на текущем шаге
+            let line1 = null;
             if (axis === 'y') {
                 line1 = { x1: originX, y1: dotPy, x2: dotPx, y2: dotPy };
             } else {
                 line1 = { x1: dotPx, y1: dotPy, x2: dotPx, y2: originY };
             }
 
-            // Вторая линия (если уже нарисована) — для оси X это линия Y
             let line2 = null;
-            if (axis === 'x' && phase === 'bothShown') {
-                line2 = { x1: originX, y1: dotPy, x2: dotPx, y2: dotPy };
+            if (axis === 'y' && phase === 'bothShown') {
+                line2 = { x1: dotPx, y1: dotPy, x2: dotPx, y2: originY };
             }
 
-            // Запретная зона вокруг цифр на осях
-            // Цифры на оси X: y = originY + 22, x = originX + i*step (для всех i)
-            // Цифры на оси Y: x = originX - 24, y = originY - i*step (для всех i)
-
-            // Кандидаты для Y (вокруг засечки на оси Y)
             if (axis === 'y') {
-                // Варианты: справа от оси, слева от оси, выше, ниже
                 const candidates = [
-                    // справа от оси, выровнено по центру засечки
                     { x: originX + 16, y: axisPointY, align: 'left', baseline: 'middle' },
-                    // слева от оси (но там цифры, оставляем на крайний случай)
                     { x: originX - 16 - textWidth, y: axisPointY, align: 'left', baseline: 'middle' },
-                    // выше засечки справа
                     { x: originX + 16, y: axisPointY - 22, align: 'left', baseline: 'middle' },
-                    // ниже засечки справа
                     { x: originX + 16, y: axisPointY + 22, align: 'left', baseline: 'middle' },
-                    // выше засечки слева
                     { x: originX - 16 - textWidth, y: axisPointY - 22, align: 'left', baseline: 'middle' },
-                    // ниже засечки слева
                     { x: originX - 16 - textWidth, y: axisPointY + 22, align: 'left', baseline: 'middle' },
                 ];
 
                 for (const cand of candidates) {
-                    // Проверяем границы холста
                     if (cand.x < 6 || cand.x + textWidth > W - 6) continue;
                     if (cand.y - textHeight / 2 < 6 || cand.y + textHeight / 2 > H - 6) continue;
 
-                    // Проверяем, не пересекается ли с цифрами на оси Y (x ≈ originX-24)
-                    // Цифры занимают область примерно от originX-30 до originX-16 по x
-                    // Наша подпись не должна попадать в эту полосу, если она на той же высоте
                     const labelLeft = cand.x;
                     const labelRight = cand.x + textWidth;
-                    const labelTop = cand.y - textHeight / 2;
-                    const labelBottom = cand.y + textHeight / 2;
-
-                    // Проверка на пересечение с зоной цифр оси Y
                     const digitsYLeft = originX - 34;
                     const digitsYRight = originX - 10;
                     if (!(labelRight < digitsYLeft || labelLeft > digitsYRight)) {
-                        // Подпись пересекается по X с цифрами — проверим по Y
-                        // Цифры на оси Y находятся на высотах originY - i*step (для всех i)
                         let overlapsDigits = false;
                         for (let i = -maxY; i <= maxY; i++) {
                             const digitY = originY - i * step;
@@ -362,45 +330,24 @@
                         if (overlapsDigits) continue;
                     }
 
-                    // Проверка на пересечение с пунктирной линией
-                    if (line1 && intersectsLine(cand.x + textWidth / 2, cand.y, textWidth, textHeight,
-                        line1.x1, line1.y1, line1.x2, line1.y2, padding)) {
-                        continue;
-                    }
-                    if (line2 && intersectsLine(cand.x + textWidth / 2, cand.y, textWidth, textHeight,
-                        line2.x1, line2.y1, line2.x2, line2.y2, padding)) {
-                        continue;
-                    }
-
-                    // Проверка, что не накладывается на саму точку
-                    if (Math.abs(cand.x + textWidth / 2 - dotPx) < textWidth / 2 + 16 &&
-                        Math.abs(cand.y - dotPy) < textHeight / 2 + 16) {
-                        continue;
-                    }
+                    if (line1 && intersectsLine(cand.x + textWidth / 2, cand.y, textWidth, textHeight, line1.x1, line1.y1, line1.x2, line1.y2, padding)) continue;
+                    if (line2 && intersectsLine(cand.x + textWidth / 2, cand.y, textWidth, textHeight, line2.x1, line2.y1, line2.x2, line2.y2, padding)) continue;
+                    if (Math.abs(cand.x + textWidth / 2 - dotPx) < textWidth / 2 + 16 && Math.abs(cand.y - dotPy) < textHeight / 2 + 16) continue;
 
                     return cand;
                 }
             }
 
-            // Кандидаты для X (вокруг засечки на оси X)
             if (axis === 'x') {
                 const candidates = [
-                    // над осью, по центру засечки
                     { x: axisPointX, y: originY - 16, align: 'center', baseline: 'bottom' },
-                    // под осью (там цифры, но если выше не влезло — пробуем)
                     { x: axisPointX, y: originY + 16, align: 'center', baseline: 'top' },
-                    // над осью, чуть левее
                     { x: axisPointX - textWidth / 2 - 10, y: originY - 16, align: 'left', baseline: 'bottom' },
-                    // над осью, чуть правее
                     { x: axisPointX + textWidth / 2 + 10, y: originY - 16, align: 'right', baseline: 'bottom' },
-                    // выше и левее
-                    { x: axisPointX, y: originY - 38, align: 'center', baseline: 'bottom' },
-                    // выше и правее
                     { x: axisPointX, y: originY - 38, align: 'center', baseline: 'bottom' },
                 ];
 
                 for (const cand of candidates) {
-                    // Вычисляем bounding box в зависимости от выравнивания
                     let left, right;
                     if (cand.align === 'center') {
                         left = cand.x - textWidth / 2;
@@ -422,15 +369,12 @@
                         bottom = cand.y + textHeight;
                     }
 
-                    // Границы холста
                     if (left < 6 || right > W - 6) continue;
                     if (top < 6 || bottom > H - 6) continue;
 
-                    // Проверка на пересечение с цифрами оси X (y ≈ originY + 22)
                     const digitsXTop = originY + 12;
                     const digitsXBottom = originY + 32;
                     if (!(bottom < digitsXTop || top > digitsXBottom)) {
-                        // Пересекается по Y с цифрами — проверим по X
                         let overlapsDigits = false;
                         for (let i = -maxX; i <= maxX; i++) {
                             const digitX = originX + i * step;
@@ -442,29 +386,14 @@
                         if (overlapsDigits) continue;
                     }
 
-                    // Проверка на пересечение с пунктирными линиями
-                    if (line1 && intersectsLine((left + right) / 2, (top + bottom) / 2,
-                        right - left, bottom - top,
-                        line1.x1, line1.y1, line1.x2, line1.y2, padding)) {
-                        continue;
-                    }
-                    if (line2 && intersectsLine((left + right) / 2, (top + bottom) / 2,
-                        right - left, bottom - top,
-                        line2.x1, line2.y1, line2.x2, line2.y2, padding)) {
-                        continue;
-                    }
-
-                    // Проверка, что не накладывается на саму точку
-                    if (Math.abs((left + right) / 2 - dotPx) < textWidth / 2 + 16 &&
-                        Math.abs((top + bottom) / 2 - dotPy) < textHeight / 2 + 16) {
-                        continue;
-                    }
+                    if (line1 && intersectsLine((left + right) / 2, (top + bottom) / 2, right - left, bottom - top, line1.x1, line1.y1, line1.x2, line1.y2, padding)) continue;
+                    if (line2 && intersectsLine((left + right) / 2, (top + bottom) / 2, right - left, bottom - top, line2.x1, line2.y1, line2.x2, line2.y2, padding)) continue;
+                    if (Math.abs((left + right) / 2 - dotPx) < textWidth / 2 + 16 && Math.abs((top + bottom) / 2 - dotPy) < textHeight / 2 + 16) continue;
 
                     return cand;
                 }
             }
 
-            // Если ничего не нашли — fallback (стандартное место)
             if (axis === 'y') {
                 return { x: originX + 16, y: axisPointY, align: 'left', baseline: 'middle' };
             } else {
@@ -474,11 +403,9 @@
 
         function drawScene() {
             ctx.clearRect(0, 0, W, H);
-
             ctx.fillStyle = '#fefefe';
             ctx.fillRect(0, 0, W, H);
 
-            // Сетка
             ctx.lineWidth = 1;
             ctx.strokeStyle = '#d0e2ed';
             for (let x = originX % step; x <= W; x += step) {
@@ -494,7 +421,6 @@
                 ctx.stroke();
             }
 
-            // Оси
             ctx.lineWidth = 3;
             ctx.beginPath();
             ctx.moveTo(20, originY);
@@ -508,7 +434,6 @@
             ctx.strokeStyle = '#3f7e9c';
             ctx.stroke();
 
-            // Стрелочки
             ctx.fillStyle = '#3f7e9c';
             ctx.beginPath();
             ctx.moveTo(W - 20, originY - 8);
@@ -521,7 +446,6 @@
             ctx.lineTo(originX + 8, 20);
             ctx.fill();
 
-            // Подписи осей
             ctx.font = 'bold 24px "Segoe UI", "Comic Sans MS", sans-serif';
             ctx.fillStyle = '#1b4f6e';
             ctx.textAlign = 'left';
@@ -529,7 +453,6 @@
             ctx.fillText('X', W - 40, originY - 18);
             ctx.fillText('Y', originX + 12, 35);
 
-            // Цифры на осях
             ctx.font = 'bold 14px "Segoe UI", "Comic Sans MS", sans-serif';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -550,37 +473,15 @@
                 ctx.fillText(i.toString(), originX - 24, py);
             }
 
-            // Ноль
             ctx.fillStyle = '#1b4f6e';
             ctx.font = 'bold 16px "Segoe UI", "Comic Sans MS", sans-serif';
             ctx.fillText('0', originX - 18, originY + 18);
 
-            // --- Пунктиры, подписи и точка ---
             if (activePoint && activeCoord) {
                 const px = activePoint.x;
                 const py = activePoint.y;
 
-                // Шаг 1: пунктир к оси Y (горизонтальная линия)
-                if (phase === 'yShown' || phase === 'bothShown') {
-                    ctx.beginPath();
-                    ctx.setLineDash([7, 7]);
-                    ctx.lineWidth = 2.5;
-                    ctx.strokeStyle = '#2a9d8f';
-                    ctx.moveTo(px, py);
-                    ctx.lineTo(originX, py);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-
-                    // Засечка на оси Y
-                    const yPix = originY - activeCoord.y * step;
-                    ctx.beginPath();
-                    ctx.arc(originX, yPix, 5, 0, 2 * Math.PI);
-                    ctx.fillStyle = '#2a9d8f';
-                    ctx.fill();
-                }
-
-                // Шаг 2: пунктир к оси X (вертикальная линия)
-                if (phase === 'bothShown') {
+                if (phase === 'xShown' || phase === 'bothShown') {
                     ctx.beginPath();
                     ctx.setLineDash([7, 7]);
                     ctx.lineWidth = 2.5;
@@ -590,7 +491,6 @@
                     ctx.stroke();
                     ctx.setLineDash([]);
 
-                    // Засечка на оси X
                     const xPix = originX + activeCoord.x * step;
                     ctx.beginPath();
                     ctx.arc(xPix, originY, 5, 0, 2 * Math.PI);
@@ -598,7 +498,23 @@
                     ctx.fill();
                 }
 
-                // Сама точка
+                if (phase === 'bothShown') {
+                    ctx.beginPath();
+                    ctx.setLineDash([7, 7]);
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeStyle = '#2a9d8f';
+                    ctx.moveTo(px, py);
+                    ctx.lineTo(originX, py);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+
+                    const yPix = originY - activeCoord.y * step;
+                    ctx.beginPath();
+                    ctx.arc(originX, yPix, 5, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#2a9d8f';
+                    ctx.fill();
+                }
+
                 ctx.setLineDash([]);
                 ctx.beginPath();
                 ctx.arc(px, py, 9, 0, 2 * Math.PI);
@@ -611,21 +527,9 @@
                 ctx.lineWidth = 2.5;
                 ctx.stroke();
 
-                // --- Подписи координат (ищем свободное место) ---
                 ctx.font = 'bold 18px "Segoe UI", "Comic Sans MS", sans-serif';
 
-                // Подпись Y
-                if (phase === 'yShown' || phase === 'bothShown') {
-                    const labelY = 'Y=' + activeCoord.y;
-                    const posY = findFreeSpotForLabel('y', activeCoord.y, labelY, px, py);
-                    ctx.fillStyle = '#2a9d8f';
-                    ctx.textAlign = posY.align;
-                    ctx.textBaseline = posY.baseline;
-                    ctx.fillText(labelY, posY.x, posY.y);
-                }
-
-                // Подпись X
-                if (phase === 'bothShown') {
+                if (phase === 'xShown' || phase === 'bothShown') {
                     const labelX = 'X=' + activeCoord.x;
                     const posX = findFreeSpotForLabel('x', activeCoord.x, labelX, px, py);
                     ctx.fillStyle = '#e07a5f';
@@ -633,9 +537,17 @@
                     ctx.textBaseline = posX.baseline;
                     ctx.fillText(labelX, posX.x, posX.y);
                 }
+
+                if (phase === 'bothShown') {
+                    const labelY = 'Y=' + activeCoord.y;
+                    const posY = findFreeSpotForLabel('y', activeCoord.y, labelY, px, py);
+                    ctx.fillStyle = '#2a9d8f';
+                    ctx.textAlign = posY.align;
+                    ctx.textBaseline = posY.baseline;
+                    ctx.fillText(labelY, posY.x, posY.y);
+                }
             }
 
-            // Начало координат
             ctx.beginPath();
             ctx.arc(originX, originY, 6, 0, 2 * Math.PI);
             ctx.fillStyle = '#1b4f6e';
@@ -668,13 +580,13 @@
             if (phase === 'idle') {
                 activePoint = { x: pixelPoint.x, y: pixelPoint.y };
                 activeCoord = coord;
-                phase = 'yShown';
-            } else if (phase === 'yShown') {
+                phase = 'xShown';
+            } else if (phase === 'xShown') {
                 phase = 'bothShown';
             } else {
                 activePoint = { x: pixelPoint.x, y: pixelPoint.y };
                 activeCoord = coord;
-                phase = 'yShown';
+                phase = 'xShown';
             }
 
             updateBadge();
