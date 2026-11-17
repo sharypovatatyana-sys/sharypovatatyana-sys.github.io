@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рисуем по координатам</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  h1 { color: #2c3e50; margin-bottom: 10px; font-size: 24px; text-align: center; }
+  p.subtitle {
+    color: #555; margin-bottom: 15px; font-size: 15px;
+    text-align: center; max-width: 800px;
+  }
+  .task-selector {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; align-items: center;
+    margin-bottom: 20px; background: #fff;
+    padding: 12px 18px; border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .task-selector label { font-weight: 600; color: #2c3e50; font-size: 15px; }
+  .task-selector select {
+    font-family: inherit; font-size: 15px; padding: 8px 12px;
+    border: 2px solid #3498db; border-radius: 6px;
+    background: #fff; color: #2c3e50; cursor: pointer;
+    min-width: 200px;
+  }
+  .container {
+    display: flex; flex-wrap: wrap; gap: 20px;
+    justify-content: center; max-width: 1100px; width: 100%;
+  }
+  .canvas-box {
+    background: #fff; padding: 20px; border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex; flex-direction: column; align-items: center;
+  }
+  canvas {
+    border: 1px solid #ccc; background-color: #ffffff;
+    cursor: crosshair; border-radius: 4px; touch-action: none;
+  }
+  .status-bar {
+    margin-top: 12px; display: flex; justify-content: space-between;
+    width: 100%; font-size: 14px; color: #444;
+    background: #eef2f5; padding: 8px 12px; border-radius: 6px;
+    gap: 10px; flex-wrap: wrap;
+  }
+  .controls {
+    margin-top: 15px; display: flex; flex-wrap: wrap;
+    gap: 10px; justify-content: center;
+  }
+  button {
+    padding: 10px 16px; font-size: 14px; font-weight: 600;
+    border: none; border-radius: 6px; cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  button:active { transform: scale(0.98); }
+  .btn-break { background-color: #f39c12; color: white; }
+  .btn-break:hover { background-color: #e67e22; }
+  .btn-undo { background-color: #3498db; color: white; }
+  .btn-undo:hover { background-color: #2980b9; }
+  .btn-clear { background-color: #e74c3c; color: white; }
+  .btn-clear:hover { background-color: #c0392b; }
+  .btn-check { background-color: #2ecc71; color: white; }
+  .btn-check:hover { background-color: #27ae60; }
+  .instructions-box {
+    background: #fff; padding: 20px; border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex: 1; min-width: 300px; max-width: 440px;
+  }
+  .instructions-box h2 {
+    font-size: 18px; color: #2c3e50; margin-bottom: 12px;
+    border-bottom: 2px solid #eef2f5; padding-bottom: 8px;
+  }
+  .group { margin-bottom: 15px; }
+  .group-title {
+    font-weight: bold; color: #2980b9;
+    margin-bottom: 6px; font-size: 15px;
+  }
+  .points-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .point-badge {
+    background: #f0f4f8; border: 1px solid #d1dce5;
+    padding: 4px 8px; border-radius: 4px;
+    font-family: monospace; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .point-badge.done {
+    background: #d4edda; border-color: #c3e6cb;
+    color: #155724; text-decoration: line-through;
+  }
+  .tip {
+    margin-top: 15px; padding: 10px;
+    background: #fff8e1; border-left: 4px solid #f39c12;
+    font-size: 13px; line-height: 1.4; color: #555;
+  }
+  .result-msg {
+    margin-top: 12px; font-weight: bold; text-align: center;
+    min-height: 20px; font-size: 15px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Рисуем по координатам</h1>
+<p class="subtitle">Выбери задание, затем кликай по пересечениям линий на сетке, чтобы ставить точки и соединять их. Между группами точек нажимай «Поднять карандаш».</p>
+
+<div class="task-selector">
+  <label for="taskSelect">Задание:</label>
+  <select id="taskSelect"></select>
+</div>
+
+<div class="container">
+  <div class="canvas-box">
+    <canvas id="gridCanvas" width="600" height="400"></canvas>
+    <div class="status-bar">
+      <span id="hoverCoords">Координаты курсора: (— ; —)</span>
+      <span id="penStatus">Режим: ✏️ Линия</span>
+    </div>
+    <div class="controls">
+      <button class="btn-break" id="btnBreak">✂️ Поднять карандаш</button>
+      <button class="btn-undo" id="btnUndo">↩️ Отменить шаг</button>
+      <button class="btn-clear" id="btnClear">🗑️ Очистить</button>
+      <button class="btn-check" id="btnCheck">👁️ Показать ответ</button>
+    </div>
+    <div class="result-msg" id="resultMsg"></div>
+  </div>
+
+  <div class="instructions-box">
+    <h2>Координаты точек</h2>
+    <div id="groupsContainer"></div>
+    <div class="tip">
+      <strong>Подсказка:</strong> Нажимай на карточки с координатами справа, чтобы отмечать уже поставленные точки. Кнопка «Поднять карандаш» нужна, когда линия прерывается (например, глаз или отдельный плавник).
+    </div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('gridCanvas');
+const ctx = canvas.getContext('2d');
+const hoverCoordsEl = document.getElementById('hoverCoords');
+const penStatusEl = document.getElementById('penStatus');
+const resultMsgEl = document.getElementById('resultMsg');
+const groupsContainer = document.getElementById('groupsContainer');
+const taskSelect = document.getElementById('taskSelect');
+
+// ====== ЗАДАНИЯ ======
+// Каждое задание: name — название, groups — массив цепочек точек [x, y]
+const TASKS = [
+  {
+    name: '🐟 Рыбка',
+    groups: [
+      { title: '1. Контур (не отрывая карандаша)', points: [[-4,2],[-3,4],[2,4],[3,3],[5,2],[7,0],[5,-2],[3,-2],[2,-4],[0,-4],[-1,-2],[-5,0],[-7,-2],[-8,-1],[-7,1],[-8,3],[-7,4],[-5,2],[-2,2],[0,3],[3,3]] },
+      { title: '2. Глаз (отдельная точка)', points: [[5,0]] }
+    ]
+  },
+  {
+    name: '🦆 Утка',
+    groups: [
+      { title: '1. Контур', points: [[3,0],[1,2],[-1,2],[3,5],[1,8],[-3,7],[-5,8],[-3,4],[-6,3],[-3,3],[-5,2],[-5,-2],[-2,-3],[-4,-4],[1,-4],[3,-3],[6,1],[3,0]] },
+      { title: '2. Глаз (отдельная точка)', points: [[-1,5]] }
+    ]
+  },
+  {
+    name: '⭐ Звезда',
+    groups: [
+      { title: '1. Контур (замкнутая линия)', points: [[-9,2],[-3,3],[0,8],[3,3],[9,2],[5,-3],[6,-9],[0,-7],[-6,-9],[-5,-3],[-9,2]] }
+    ]
+  },
+  {
+    name: '🚀 Ракета',
+    groups: [
+      { title: '1. Корпус', points: [[-3,-13],[-6,-13],[-3,-5],[-3,6],[0,10],[3,6],[3,-5],[6,-13],[3,-13],[3,-8],[1,-8],[2,-13],[-2,-13],[-1,-8],[-3,-8],[-3,-13]] }
+    ]
+  },
+  {
+    name: '✈️ Самолёт',
+    groups: [
+      { title: '1. Корпус', points: [[-7,0],[-5,2],[7,2],[9,5],[10,5],[10,1],[9,0],[-7,0]] },
+      { title: '2. Верхнее крыло', points: [[0,2],[5,6],[7,6],[4,2]] },
+      { title: '3. Нижнее крыло', points: [[0,1],[6,-3],[8,-3],[4,1],[0,1]] }
+    ]
+  },
+  {
+    name: '🚁 Вертолёт',
+    groups: [
+      { title: '1. Корпус', points: [[-5,3],[-3,5],[6,5],[10,3],[10,1],[9,0],[-2,0],[-5,3]] },
+      { title: '2. Хвост', points: [[-5,3],[-10,7],[-3,5]] },
+      { title: '3. Шасси', points: [[5,0],[5,-1],[6,-2],[8,-2],[9,-2.5],[8,-3],[-3,-3],[-4,-2.5],[-3,-2],[-1,-2],[-2,-1],[-2,0]] },
+      { title: '4. Винт (лопасть)', points: [[-12,5],[-8,9]] },
+      { title: '5. Винт (верхняя линия)', points: [[-6,7],[10,7]] },
+      { title: '6. Окно', points: [[-1,1],[-1,4],[2,4],[2,1],[-1,1]] }
+    ]
+  },
+  {
+    name: '⛵ Кораблик (лодка)',
+    groups: [
+      { title: '1. Лодка', points: [[-5,0],[-3,-2],[3,-2],[5,0],[-5,0]] },
+      { title: '2. Парус', points: [[-1,0],[-1,5],[2,0],[-1,0]] },
+      { title: '3. Мачта', points: [[0,0],[0,6]] }
+    ]
+  },
+  {
+    name: '🏠 Домик',
+    groups: [
+      { title: '1. Стены и крыша', points: [[-4,-3],[-4,3],[0,6],[4,3],[4,-3],[-4,-3]] },
+      { title: '2. Дверь', points: [[-1,-3],[-1,0],[1,0],[1,-3]] }
+    ]
+  },
+  {
+    name: '🌲 Ёлочка',
+    groups: [
+      { title: '1. Контур ёлки', points: [[5,9],[6,9],[5,8],[6,8],[4,8],[5,8],[6,8],[7,8],[5,7],[6,7],[3,7],[4,7],[5,7],[6,7],[7,7],[8,7],[5,6],[6,6],[4,6],[5,6],[6,6],[7,6],[5,5],[6,5],[5,4],[6,4],[5,3],[6,3],[5,2],[6,2]] }
+    ]
+  }
+];
+
+// ====== СОСТОЯНИЕ ======
+let currentTask = TASKS[0];
+let userChains = [[]];
+let hoverPoint = null;
+let showAnswer = false;
+
+// Диапазон сетки подстраивается под задание, но с запасом
+let minX = -14, maxX = 20, minY = -16, maxY = 22;
+let cols, rows, padding = 30, step, offsetX, offsetY;
+
+function computeGrid() {
+  // Собираем все точки задания
+  const all = [];
+  currentTask.groups.forEach(g => g.points.forEach(p => all.push(p)));
+  let mnX = Math.min(...all.map(p => p[0]));
+  let mxX = Math.max(...all.map(p => p[0]));
+  let mnY = Math.min(...all.map(p => p[1]));
+  let mxY = Math.max(...all.map(p => p[1]));
+  // Добавляем запас, чтобы оси были видны и было место
+  minX = Math.min(mnX - 2, -1);
+  maxX = Math.max(mxX + 2, 1);
+  minY = Math.min(mnY - 2, -1);
+  maxY = Math.max(mxY + 2, 1);
+  // Выравниваем, чтобы было красиво (чётные границы)
+  minX = Math.floor(minX / 2) * 2;
+  maxX = Math.ceil(maxX / 2) * 2;
+  minY = Math.floor(minY / 2) * 2;
+  maxY = Math.ceil(maxY / 2) * 2;
+
+  cols = maxX - minX;
+  rows = maxY - minY;
+  const cellW = (canvas.width - padding * 2) / cols;
+  const cellH = (canvas.height - padding * 2) / rows;
+  step = Math.min(cellW, cellH);
+  offsetX = (canvas.width - cols * step) / 2;
+  offsetY = (canvas.height - rows * step) / 2;
+}
+
+// ====== ОТРИСОВКА ======
+function toCanvasX(x) { return offsetX + (x - minX) * step; }
+function toCanvasY(y) { return offsetY + (maxY - y) * step; }
+function fromCanvas(px, py) {
+  const gx = Math.round((px - offsetX) / step + minX);
+  const gy = Math.round(maxY - (py - offsetY) / step);
+  if (gx >= minX && gx <= maxX && gy >= minY && gy <= maxY) {
+    const cx = toCanvasX(gx), cy = toCanvasY(gy);
+    if (Math.hypot(px - cx, py - cy) <= step * 0.45) return { x: gx, y: gy };
+  }
+  return null;
+}
+
+function drawGrid() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#e0e6ed';
+  for (let x = minX; x <= maxX; x++) {
+    const cx = toCanvasX(x);
+    ctx.beginPath(); ctx.moveTo(cx, toCanvasY(maxY)); ctx.lineTo(cx, toCanvasY(minY)); ctx.stroke();
+  }
+  for (let y = minY; y <= maxY; y++) {
+    const cy = toCanvasY(y);
+    ctx.beginPath(); ctx.moveTo(toCanvasX(minX), cy); ctx.lineTo(toCanvasX(maxX), cy); ctx.stroke();
+  }
+  const zeroX = toCanvasX(0), zeroY = toCanvasY(0);
+  ctx.lineWidth = 2; ctx.strokeStyle = '#2c3e50';
+  // Ось X
+  ctx.beginPath(); ctx.moveTo(toCanvasX(minX) - 5, zeroY); ctx.lineTo(toCanvasX(maxX) + 10, zeroY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(toCanvasX(maxX) + 10, zeroY); ctx.lineTo(toCanvasX(maxX) + 3, zeroY - 4); ctx.lineTo(toCanvasX(maxX) + 3, zeroY + 4); ctx.fillStyle = '#2c3e50'; ctx.fill();
+  // Ось Y
+  ctx.beginPath(); ctx.moveTo(zeroX, toCanvasY(minY) + 5); ctx.lineTo(zeroX, toCanvasY(maxY) - 10); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(zeroX, toCanvasY(maxY) - 10); ctx.lineTo(zeroX - 4, toCanvasY(maxY) - 3); ctx.lineTo(zeroX + 4, toCanvasY(maxY) - 3); ctx.fill();
+  // Подписи
+  ctx.font = '11px Arial'; ctx.fillStyle = '#333';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  for (let x = minX; x <= maxX; x++) { if (x === 0) continue; ctx.fillText(x, toCanvasX(x), zeroY + 5); }
+  ctx.font = 'bold 13px Arial'; ctx.fillText('X', toCanvasX(maxX) + 12, zeroY + 6);
+  ctx.font = '11px Arial'; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+  for (let y = minY; y <= maxY; y++) { if (y === 0) continue; ctx.fillText(y, zeroX - 6, toCanvasY(y)); }
+  ctx.font = 'bold 13px Arial'; ctx.fillText('Y', zeroX - 8, toCanvasY(maxY) - 10);
+  ctx.font = '11px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('0', zeroX - 5, zeroY + 8);
+}
+
+function drawAnswer() {
+  if (!showAnswer) return;
+  ctx.save();
+  ctx.strokeStyle = 'rgba(46, 204, 113, 0.55)';
+  ctx.fillStyle = 'rgba(46, 204, 113, 0.75)';
+  ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  currentTask.groups.forEach(group => {
+    if (group.points.length === 1) {
+      const pt = group.points[0];
+      ctx.beginPath(); ctx.arc(toCanvasX(pt[0]), toCanvasY(pt[1]), 6, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.beginPath();
+      group.points.forEach((pt, idx) => {
+        const cx = toCanvasX(pt[0]), cy = toCanvasY(pt[1]);
+        if (idx === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+      });
+      ctx.stroke();
+    }
+  });
+  ctx.restore();
+}
+
+function drawUserLines() {
+  ctx.save();
+  ctx.strokeStyle = '#2980b9'; ctx.fillStyle = '#e74c3c';
+  ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  userChains.forEach(chain => {
+    if (chain.length === 0) return;
+    if (chain.length > 1) {
+      ctx.beginPath();
+      chain.forEach((pt, idx) => {
+        const cx = toCanvasX(pt.x), cy = toCanvasY(pt.y);
+        if (idx === 0) ctx.moveTo(cx, cy); else ctx.lineTo(cx, cy);
+      });
+      ctx.stroke();
+    }
+    chain.forEach(pt => {
+      ctx.beginPath(); ctx.arc(toCanvasX(pt.x), toCanvasY(pt.y), 4, 0, Math.PI * 2); ctx.fill();
+    });
+  });
+  if (hoverPoint) {
+    const hx = toCanvasX(hoverPoint.x), hy = toCanvasY(hoverPoint.y);
+    const currentChain = userChains[userChains.length - 1];
+    if (currentChain.length > 0) {
+      const lastPt = currentChain[currentChain.length - 1];
+      ctx.setLineDash([4, 4]); ctx.strokeStyle = 'rgba(41, 128, 185, 0.5)'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(toCanvasX(lastPt.x), toCanvasY(lastPt.y)); ctx.lineTo(hx, hy); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = 'rgba(231, 76, 60, 0.6)';
+    ctx.beginPath(); ctx.arc(hx, hy, 6, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function render() { drawGrid(); drawAnswer(); drawUserLines(); }
+
+function updateStatus() {
+  const currentChain = userChains[userChains.length - 1];
+  if (currentChain.length === 0) penStatusEl.textContent = 'Режим: ✂️ Новая линия';
+  else {
+    const last = currentChain[currentChain.length - 1];
+    penStatusEl.textContent = `Режим: ✏️ Продолжение от (${last.x}; ${last.y})`;
+  }
+}
+
+// ====== ИНТЕРФЕЙС СПИСКА ЗАДАНИЙ ======
+function renderTaskUI() {
+  groupsContainer.innerHTML = '';
+  currentTask.groups.forEach(group => {
+    const gDiv = document.createElement('div'); gDiv.className = 'group';
+    const tDiv = document.createElement('div'); tDiv.className = 'group-title'; tDiv.textContent = group.title;
+    gDiv.appendChild(tDiv);
+    const list = document.createElement('div'); list.className = 'points-list';
+    group.points.forEach(pt => {
+      const badge = document.createElement('span');
+      badge.className = 'point-badge';
+      badge.textContent = `(${pt[0]}; ${pt[1]})`;
+      badge.onclick = () => badge.classList.toggle('done');
+      list.appendChild(badge);
+    });
+    gDiv.appendChild(list);
+    groupsContainer.appendChild(gDiv);
+  });
+}
+
+// ====== ВЫБОР ЗАДАНИЯ ======
+function loadTask(index) {
+  currentTask = TASKS[index];
+  userChains = [[]];
+  showAnswer = false;
+  resultMsgEl.textContent = '';
+  computeGrid();
+  renderTaskUI();
+  updateStatus();
+  render();
+}
+
+TASKS.forEach((t, i) => {
+  const opt = document.createElement('option');
+  opt.value = i; opt.textContent = t.name;
+  taskSelect.appendChild(opt);
+});
+taskSelect.addEventListener('change', (e) => loadTask(parseInt(e.target.value)));
+
+// ====== СОБЫТИЯ ======
+function getPointerPos(e) {
+  const rect = canvas.getBoundingClientRect();
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  const pos = getPointerPos(e);
+  hoverPoint = fromCanvas(pos.x, pos.y);
+  hoverCoordsEl.textContent = hoverPoint ? `Координаты курсора: (${hoverPoint.x}; ${hoverPoint.y})` : 'Координаты курсора: (— ; —)';
+  render();
+});
+canvas.addEventListener('mouseleave', () => {
+  hoverPoint = null; hoverCoordsEl.textContent = 'Координаты курсора: (— ; —)'; render();
+});
+canvas.addEventListener('click', (e) => {
+  const pos = getPointerPos(e);
+  const pt = fromCanvas(pos.x, pos.y);
+  if (!pt) return;
+  const currentChain = userChains[userChains.length - 1];
+  if (currentChain.length > 0) {
+    const last = currentChain[currentChain.length - 1];
+    if (last.x === pt.x && last.y === pt.y) return;
+  }
+  currentChain.push(pt);
+  updateStatus(); render();
+});
+
+document.getElementById('btnBreak').addEventListener('click', () => {
+  if (userChains[userChains.length - 1].length > 0) {
+    userChains.push([]); updateStatus(); render();
+  }
+});
+document.getElementById('btnUndo').addEventListener('click', () => {
+  let currentChain = userChains[userChains.length - 1];
+  if (currentChain.length > 0) currentChain.pop();
+  else if (userChains.length > 1) {
+    userChains.pop();
+    currentChain = userChains[userChains.length - 1];
+    if (currentChain.length > 0) currentChain.pop();
+  }
+  updateStatus(); render();
+});
+document.getElementById('btnClear').addEventListener('click', () => {
+  userChains = [[]]; showAnswer = false; resultMsgEl.textContent = '';
+  document.querySelectorAll('.point-badge').forEach(b => b.classList.remove('done'));
+  updateStatus(); render();
+});
+document.getElementById('btnCheck').addEventListener('click', () => {
+  showAnswer = !showAnswer;
+  resultMsgEl.textContent = showAnswer ? 'Зелёным показан правильный контур.' : '';
+  render();
+});
+
+// Старт
+loadTask(0);
+</script>
+</body>
+</html>
